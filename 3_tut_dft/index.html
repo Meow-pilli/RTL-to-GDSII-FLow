@@ -1,0 +1,773 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-06-27 Mo 14:11 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tutorial IC Design</title>
+<meta name="author" content="Prof. Alberto Garcia-Ortiz and Amir Najafi" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="../0_setup/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../0_setup/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="../0_setup/src/lib/js/jquery.min.js"></script>
+<script src="../0_setup/src/lib/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../0_setup/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="../0_setup/src/readtheorg_theme/js/readtheorg.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Tutorial IC Design</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgadf11b5">1. Design For Test</a>
+<ul>
+<li><a href="#org82caae7">1.1. Goals</a></li>
+<li><a href="#org85b05a0">1.2. Orginize your data and setup the tool</a></li>
+</ul>
+</li>
+<li><a href="#org476a91c">2. Design the unit (RTL)</a></li>
+<li><a href="#org0d5e2e0">3. Lunch design compiler</a></li>
+<li><a href="#org1c88b59">4. DFT configuration and synthesis</a>
+<ul>
+<li><a href="#org3478fe3">4.1. Design import</a></li>
+<li><a href="#orgbb4fcf8">4.2. DFT synthesis</a></li>
+</ul>
+</li>
+<li><a href="#orgcac3098">5. ATPG</a>
+<ul>
+<li><a href="#orgab8b730">5.1. Lunch TetraMAX</a></li>
+<li><a href="#orgfe0ee41">5.2. Read the netlist and library files</a></li>
+<li><a href="#org01f628e">5.3. Build the design</a></li>
+<li><a href="#org1b85e24">5.4. DRC check</a></li>
+<li><a href="#orgdc6a6f1">5.5. Generate the test pattern</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgadf11b5" class="outline-2">
+<h2 id="orgadf11b5"><span class="section-number-2">1.</span> Design For Test</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org82caae7" class="outline-3">
+<h3 id="org82caae7"><span class="section-number-3">1.1.</span> Goals</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+The goal of this tutorial is to learn design for test and generation of test patterns.
+In this part of the lab, we use a simple adder design for better understanding of the fellow
+without dealing with design complications. In more complex designs, some further changes to 
+the design might be necessary. 
+In this experiment, we will modify the architecture by adding some scan input and output pins.    
+</p>
+
+<p>
+In this tutorial, you are going to exersice the following steps:
+</p>
+<ul class="org-ul">
+<li>Modify the design</li>
+<li>Integrate the scan architechture into the design</li>
+<li>Automatic Test Pattern Generation (ATPG)</li>
+<li>Simulating the design using the generated patterns</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org85b05a0" class="outline-3">
+<h3 id="org85b05a0"><span class="section-number-3">1.2.</span> Orginize your data and setup the tool</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Before you start, it is a good idea to orginize your data by creating set of directories 
+where you are going to put the data generated during the design flow. Go to the directory 
+of <code>dft/do_synth</code>  and create the following directories to organize the date:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">cd dft/do_synth
+mkdir results
+mkdir reports
+mkdir cmd
+mkdir log
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org476a91c" class="outline-2">
+<h2 id="org476a91c"><span class="section-number-2">2.</span> Design the unit (RTL)</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+The first step in the design flow is to create the RTL code of the
+adder using VHDL. You just need a text editor to write VHDL. In the terminal, go to the
+directory <code>dft/rtl</code> and open a text editor to create the file
+<code>my_adder.vhd</code>.  There are a lot of possibilities, as
+<code>vim</code>, <code>nano</code>, <code>gedit</code>, etc. I would recomend you <code>emacs</code>.
+</p>
+
+<p>
+In the terminal execute:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">cd dft/rtl
+</pre>
+</div>
+
+<p>
+and then,
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">emacs my_adder.vhd &amp;
+</pre>
+</div>
+
+<p>
+The code can be as follows:
+</p>
+<div class="org-src-container">
+<pre class="src src-vhdl">library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity my_adder is
+
+  port (
+    clk,rstn: in std_logic;
+    dta,dtb : in  std_logic_vector(7 downto 0);
+    dto : out std_logic_vector(7 downto 0));
+
+end my_adder;
+
+architecture rtl of my_adder is
+
+  signal dta_int,dtb_int,dto_int : std_logic_vector(7 downto 0);
+
+begin  -- architecture rtl
+
+  -- Define the memory elements
+  process (clk, rstn) is
+  begin  -- process
+    if rstn = '0' then                   -- asynchronous reset (active low)
+       dta_int &lt;= (others=&gt;'0');
+       dtb_int &lt;= (others=&gt;'0');
+       dto     &lt;= (others=&gt;'0');
+    elsif clk'event and clk = '1' then  -- rising clock edge
+       dta_int &lt;= dta;
+       dtb_int &lt;= dtb;
+       dto     &lt;= dto_int;
+    end if;
+  end process;
+
+  -- Define the adder
+  dto_int &lt;= std_logic_vector( signed(dta_int)+signed(dtb_int) );
+
+end architecture rtl;
+</pre>
+</div>
+
+<p>
+In order to integrate the scan chain into the design, we need to modify the design. Define 
+SERIAL_IN and SCAN_EN as input ports of form std_logic and SERIAL_OUT as output port of the std_logic.
+Save the changes and close the text editor.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-vhdl">SERIAL_IN, SCAN_EN: in std_logic;
+SERIAL_OUT: out std_logic
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0d5e2e0" class="outline-2">
+<h2 id="org0d5e2e0"><span class="section-number-2">3.</span> Lunch design compiler</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+For this lab you are going to use the Design Compiler tool from Synopsys as well as 
+INNOVUS from Cadence. In the terminal, go to the directory <code>dft/do_synth</code>. for using the Design Compiler 
+create a <code>sourceme.sh</code> file to do the setup.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">export SNPSLMD_LICENSE_FILE=28231@item0096
+export PATH=/usrf01/prog/synopsys/syn/R-2020.09-SP4/bin:${PATH}
+</pre>
+</div>
+
+<p>
+Now you can source that file.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">source sourceme.sh
+</pre>
+</div>
+
+<p>
+Before you open the synthesis tool, it is practical to select the library of
+standard cells that you use and to instruct the tool to save the log
+files into the directories that you have previously defined. You can
+do that creating a <code>.synopsys_dc.setup</code> file. Run <code>emacs .synopsys_dc.setup</code>.
+</p>
+
+<p>
+First, you can add the following commands to your <code>.synopsys_dc.setup</code>
+file; they instruct the tool to use your directories.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">define_design_lib work -path ./tool/work
+
+set_app_var  view_log_file        ./log/synth_view.log
+set_app_var  sh_command_log_file  ./log/synth_sh.log
+set_app_var  filename_log_file    ./log/synth_file.log
+
+set_app_var search_path       [concat ./cmd/  [get_app_var search_path] ]    
+</pre>
+</div>
+
+<p>
+And afterwards you can write the command to define the library to use. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">set library_path "../../../0_FreePDK45/LIB/"
+set library_name "NangateOpenCellLibrary_typical_ccs_scan.db"
+
+set_app_var target_library    $library_name
+set_app_var link_library      [concat $library_name dw_foundation.sldb "*"]
+set_app_var search_path       [concat $library_path [get_app_var search_path] ]
+set_app_var synthetic_library [list dw_foundation.sldb]
+set_app_var symbol_library    [list class.sdb]
+
+set_app_var vhdlout_use_packages { ieee.std_logic_1164.all  NangateOpenCellLibrary.Components.all }
+set_app_var vhdlout_write_components FALSE
+</pre>
+</div>
+
+<p>
+Save  your file. Now you can start the tool. Launch <code>design_vision</code> in the terminal. To
+save the log in a directory, you can add a linux pipe 
+<code>tee log/synthesis.log</code> that redirects the log output to a file called <code>log/synthesis.log</code>. 
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">design_vision | tee log/synthesis.log &amp;
+</pre>
+</div>
+
+<div id="org914dee7" class="figure">
+<p><img src="figs/design_vision.png" alt="design_vision.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1c88b59" class="outline-2">
+<h2 id="org1c88b59"><span class="section-number-2">4.</span> DFT configuration and synthesis</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org3478fe3" class="outline-3">
+<h3 id="org3478fe3"><span class="section-number-3">4.1.</span> Design import</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+The first step is to read the RTL code.  In the menu select <code>File</code> &rarr;
+<code>Read</code> . In the new window select the VHDL code to read, i.e., <code>../rtl/my_adder.vhd</code> and click <code>Open</code>.
+</p>
+
+
+<div id="orgfdb3558" class="figure">
+<p><img src="figs/desig_vision_read.png" alt="desig_vision_read.png" />
+</p>
+</div>
+
+<p>
+Alternatively, you can  type the following command line in the <code>design_vision</code> prompt.
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">read_file -format vhdl {../rtl/my_adder.vhd}
+</pre>
+</div>
+
+<p>
+The tool reads and "understands" the code. In the log file you can see
+the elements that it has inferred. For example, it found the following
+registers:
+</p>
+
+<pre class="example" id="orgf2e1cd2">
+Inferred memory devices in process
+	in routine my_adder line 22 in file
+		'/usrf06/home/agids/usr/agarcia/GIT/tutorial_ic_design/my_adder/rtl/my_adder.vhd'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|       dto_reg       | Flip-flop |   8   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     dta_int_reg     | Flip-flop |   8   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     dtb_int_reg     | Flip-flop |   8   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgbb4fcf8" class="outline-3">
+<h3 id="orgbb4fcf8"><span class="section-number-3">4.2.</span> DFT synthesis</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Before configure the DFT once compile the design and have a look at the schematic of your design.
+you can  type the following command line in the <code>design_vision</code> prompt.
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">compile
+</pre>
+</div>
+
+<p>
+Observe that the <b>DFFR_X1</b> registers are used by the synthesis tool. 
+</p>
+
+<p>
+Now, we are going to configure the DFT. There are many options which should be set to configure the DFT. Among all options, we set the clock, test period, type of scan cells, the reset, 
+scan input and output, Scan enable and test mode.
+There are three widly used scan cells, <i><b>Muxed-D</b></i> Scan Cell, <i><b>Clocked</b></i> Scan Cell and <i><b>LSSD</b></i> Scan Cell. Here, we use MUXED-D scan cells.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">set_scan_configuration -style multiplexed_flip_flop
+set test_default_period 100
+set_dft_signal -view existing_dft -type ScanClock -timing {45 55} -port clk
+set_dft_signal -view existing_dft -type Reset -active_state 0 -port rstn
+set_dft_signal -view spec -type ScanDataIn -port SERIAL_IN
+set_dft_signal -view spec -type ScanDataOut -port SERIAL_OUT
+set_dft_signal -view spec -type ScanEnable -port SCAN_EN -active_state 1
+create_test_protocol
+</pre>
+</div>
+
+<p>
+Now you can begin the DFT synthesis. Execute the following commands:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">compile -scan
+</pre>
+</div>
+
+<p>
+Using this command, we redo the compilation by replacing all the sequential elements 
+by scan equivalent. Observe the replacement of the sequential elements of the <b>DFFR_X1</b> with the scan equivalent of
+<b>SDFFRS_X1</b> in your design.
+</p>
+
+<p>
+You can preview the scanned design for scan chain information using:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">preview_dft
+</pre>
+</div>
+
+<p>
+Besides, you can check the design for design rule violations using the following command:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">dft_drc
+</pre>
+</div>
+
+<p>
+After that you can specify the scan chain. You can select the number and length of the scan chains.
+We define only one scan chain for this design. In addition, we define that no different clock 
+edges may occur in the scan chain. The input and output of the scan chain is also specified.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">set_scan_configuration -chain_count 1
+set_scan_configuration -clock_mixing no_mix
+set_scan_path chain1 -scan_data_in SERIAL_IN -scan_data_out SERIAL_OUT
+</pre>
+</div>
+
+<p>
+Then, the scan chain can be inserted into the design. In addition, the command 
+<code>set_scan_state_scan_existing</code> indicates that the scan chain is fully implemented or not.
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">insert_dft
+set_scan_state scan_existing
+</pre>
+</div>
+
+<p>
+Check the schematic of your design once more. The scan chain inserted in the design.
+Finally, we can produce some reports including the scan chain and the instances in each chain using the <code>report_scan_path</code> as follows:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">report_area
+report_timing
+report_power 
+report_scan_path -view existing_dft -chain all &gt; reports/chain.rep
+report_scan_path -view existing_dft -cell all &gt; reports/cell.rep
+</pre>
+</div>
+
+<p>
+After top-level scan insertion, we need different files for test pattern generation
+with TetraMax from synopsys.
+</p>
+
+<p>
+Write out the test protocol file in Standard Test Interface Language (STIL) format and write out a Verilog or VHDL
+top-level netlist. For example, use the following tcl commands to save the necessary files as follows:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">change_names -hierarchy -rule verilog
+write -format verilog -hierarchy -out results/my_adder_dft.vg
+write -format ddc -hierarchy -output results/my_adder_dft.ddc
+write_scan_def -output results/my_adder_scan.def
+set test_stil_netlist_format verilog
+write_test_protocol -output results/my_adder.stil
+</pre>
+</div>
+
+<p>
+Using the above commands, we write a gate level netlist <code>.vg</code>. <code>set test_stil_netlist_format verilog</code> command 
+identifies the netlist format that you are exporting to TetraMAX ATPG. We also write out the test protocol file using the 
+<code>write_test_protocol</code> command.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcac3098" class="outline-2">
+<h2 id="orgcac3098"><span class="section-number-2">5.</span> ATPG</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-orgab8b730" class="outline-3">
+<h3 id="orgab8b730"><span class="section-number-3">5.1.</span> Lunch TetraMAX</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+In this part, we want to use the TetraMax from synopsys to create the test patterns. 
+Redirect to the tetramex folder <code>cd dft/tetramx</code> and start the software as follows:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">export PATH="/usrf01/prog/synopsys/txs/R-2020.09-SP4/bin:${PATH}"
+tmax
+</pre>
+</div>
+
+
+
+<div id="org59cf08c" class="figure">
+<p><img src="figs/tmax_open.png" alt="tmax_open.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfe0ee41" class="outline-3">
+<h3 id="orgfe0ee41"><span class="section-number-3">5.2.</span> Read the netlist and library files</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+In this step, we read the gate level netlist of the design as well as the library definition 
+of each cell in verilog format. Browse the netlists and add the verilog netlist of the design from 
+the <code>dft/do_synth/results</code> directory. Moreover, add the nangate library in verilog format in 
+<code>0_FreePDK45/Verilog/NangateOpenCellLibrary.v</code> directory. 
+</p>
+
+
+<div id="orgb91c48a" class="figure">
+<p><img src="figs/tmax_read_netlist.png" alt="tmax_read_netlist.png" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org01f628e" class="outline-3">
+<h3 id="org01f628e"><span class="section-number-3">5.3.</span> Build the design</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+The Run Build Model dialog box sets the relevant parameters and builds the in-memory simulation 
+model from the design modules that have been read in. TetraMAX ATPG performs a learning process, 
+which you can control with this dialog. If a simulation model already exists, it is automatically 
+deleted before the new model is built. Select the <b>Build</b> from the menu bar and select your top 
+design. We use default options of <i><b>Set learning</b></i> box.
+</p>
+
+
+<div id="org86cc9ab" class="figure">
+<p><img src="figs/tmax_build.png" alt="tmax_build.png" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org1b85e24" class="outline-3">
+<h3 id="org1b85e24"><span class="section-number-3">5.4.</span> DRC check</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+Now, we perform design rule checking (DRC). First, specifie the name of the STIL procedures 
+file that defines the scan chains and test procedures, then click on <code>Run</code>.
+</p>
+
+
+<div id="orga997540" class="figure">
+<p><img src="figs/tmax_drc.png" alt="tmax_drc.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdc6a6f1" class="outline-3">
+<h3 id="orgdc6a6f1"><span class="section-number-3">5.5.</span> Generate the test pattern</h3>
+<div class="outline-text-3" id="text-5-5">
+<p>
+After you have imported the design and completed the DRC check without error, you
+can use TetraMax to create the test patterns. First, the errors should be annotated. 
+In our case, we would like to check all stuck-at errors. 
+Use the following two commands to annotate the errors and generate the test
+patterns:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">add_faults -all
+run_atpg -auto
+</pre>
+</div>
+
+<pre class="example" id="org2dcd76e">
+ATPG performed for stuck fault model using internal pattern source. 
+---------------------------------------------------------- 
+#patterns     #faults     #ATPG faults  test      process 
+stored     detect/active  red/au/abort  coverage  CPU time 
+---------  -------------  ------------  --------  -------- 
+Begin deterministic ATPG: #uncollapsed_faults=154, abort_limit=10... 
+7             154      0         0/0/0   100.00%      0.00 
+
+    Uncollapsed Stuck Fault Summary Report 
+----------------------------------------------- 
+fault class                     code   #faults 
+------------------------------  ----  --------- 
+Detected                         DT        354 
+Possibly detected                PT          0 
+Undetectable                     UD         24 
+ATPG untestable                  AU          0 
+Not detected                     ND          0 
+----------------------------------------------- 
+total faults                               378 
+test coverage                           100.00% 
+----------------------------------------------- 
+           Pattern Summary Report 
+----------------------------------------------- 
+#internal patterns                           7 
+    #basic_scan patterns                     7 
+----------------------------------------------- 
+           CPU Usage Summary Report 
+----------------------------------------------- 
+Total CPU time                            0.00 
+-----------------------------------------------
+</pre>
+
+<p>
+Finally, we write the generated pattern in binary format using the following tcl command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">write_patterns my_adder_pattern.v -internal -format binary
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

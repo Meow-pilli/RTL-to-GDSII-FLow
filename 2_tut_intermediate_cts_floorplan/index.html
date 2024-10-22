@@ -1,0 +1,1658 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+<!-- 2023-06-12 Mo 15:35 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Intermediate IC Design Flow (hierarchical design)</title>
+<meta name="author" content="Prof. Alberto Garcia-Ortiz, Amir Najafi" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="../0_setup/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../0_setup/src/readtheorg_theme/css/readtheorg.css"/>
+<script type="text/javascript" src="../0_setup/src/lib/js/jquery.min.js"></script>
+<script type="text/javascript" src="../0_setup/src/lib/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../0_setup/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="../0_setup/src/readtheorg_theme/js/readtheorg.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Intermediate IC Design Flow (hierarchical design)</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orge76cbd4">1. Tutorial: Intermediate design flow</a>
+<ul>
+<li><a href="#org0ae77ee">1.1. Goals</a></li>
+<li><a href="#orgc0e1439">1.2. Organise your data</a></li>
+</ul>
+</li>
+<li><a href="#org7b5b94c">2. Macro generation</a>
+<ul>
+<li><a href="#org9a49536">2.1. Synthesis (PE) (Genus tool)</a></li>
+<li><a href="#orgeca0d36">2.2. Place and Route of PE</a>
+<ul>
+<li><a href="#org5e405a4">2.2.1. Initialize the design</a></li>
+<li><a href="#org5596c86">2.2.2. Floorplanning</a></li>
+<li><a href="#orgfeef08d">2.2.3. Placement</a></li>
+<li><a href="#org07bf5c6">2.2.4. Clock-Tree-Synthesis (CTS)</a></li>
+<li><a href="#org61d2a12">2.2.5. Routing</a></li>
+<li><a href="#org148c3af">2.2.6. Extracting LEF, DEF, and timing models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org2347cb3">3. NoC Implementation</a>
+<ul>
+<li><a href="#org4abeed7">3.1. Synthesis</a></li>
+<li><a href="#orgc2b9829">3.2. Place and Route</a>
+<ul>
+<li><a href="#orga30688b">3.2.1. Read in the design</a></li>
+<li><a href="#org8e5044a">3.2.2. Floorplanning</a></li>
+<li><a href="#orga80ee61">3.2.3. Placement of Standard Cells</a></li>
+<li><a href="#orgb2f2aa4">3.2.4. Clock Tree Synthesis</a></li>
+<li><a href="#orge0b3044">3.2.5. Routing</a></li>
+<li><a href="#org16afe8e">3.2.6. Optimization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orge76cbd4" class="outline-2">
+<h2 id="orge76cbd4"><span class="section-number-2">1.</span> Tutorial: Intermediate design flow</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org0ae77ee" class="outline-3">
+<h3 id="org0ae77ee"><span class="section-number-3">1.1.</span> Goals</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+In this tutorial, we cover intermediate-level design flow for creating an IC.
+Here, we cover Macro generation, synthesis, and detailed backend design. The module that you are going to develop is a 4X4 2D mesh NoC. 
+</p>
+
+<p>
+In this tutorial, the design flow that you are going to
+exercise includes the following steps:
+</p>
+<ul class="org-ul">
+<li>We create a macroblock, called dummy, which later on is used as Processing Element (PE) in the NoC.</li>
+<li>Synthesis of the RTL code to produce a netlist. This is done using the cadence Genus tool.</li>
+<li>Backend design with a focus on clock tree synthesis and floorplanning.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc0e1439" class="outline-3">
+<h3 id="orgc0e1439"><span class="section-number-3">1.2.</span> Organise your data</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+To start, create a set of directories where you will store the data generated during the design flow.
+Go to the directory of <code>NoC_2D</code> and create the following sub-directories in a terminal:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">cd NoC_2D/
+mkdir do_syn
+mkdir do_pr
+</pre>
+</div>
+
+<p>
+Now that you have a clear structure for your data, you can start with the implementation.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org7b5b94c" class="outline-2">
+<h2 id="org7b5b94c"><span class="section-number-2">2.</span> Macro generation</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+In this section, we learn how to generate the <code>lef</code> and <code>lib</code> files of a macro. 
+</p>
+</div>
+
+<div id="outline-container-org9a49536" class="outline-3">
+<h3 id="org9a49536"><span class="section-number-3">2.1.</span> Synthesis (PE) (Genus tool)</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+In this part of the tutorial, you are going to synthesise your PE.
+For the pupose of this tutorial, we use a dummy block which represents the PEs in NoC.
+</p>
+
+<p>
+To start the synthesis, open a <b>new</b> terminal and go to the <code>do_syn</code> directory and create new sub-directories as follows:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">cd do_syn
+mkdir cmd reports results
+</pre>
+</div>
+
+<p>
+To do the set-up, we have to define the paths to the tool. Create a
+file called <code>sourceme_gen.csh</code> with the following content:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">setenv LM_LICENSE_FILE "28211@item0096"
+source /eda/cadence/2022-23/scripts/GENUS_21.14.000_RHELx86.csh
+</pre>
+</div>
+
+<p>
+And then, source the sourceme.csh file:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">source sourceme_gen.csh
+</pre>
+</div>
+
+<p>
+Now you can start the Genus in legacy User Interface. This is an interface specific for Genus.
+You can use the <code>-log</code> option in genus to add an string to <code>.log</code> and <code>.cmd</code> file.
+This way you can create unique log files.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">genus -legacy_ui -log 1st_syn
+</pre>
+</div>
+
+<p>
+The first step is to set the standard cell library. Write the following tcl commands in the tool prompt:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set_attribute lib_search_path {../../../0_FreePDK45/CCS}
+set_attribute library {NangateOpenCellLibrary_typical_ccs.lib} 
+</pre>
+</div>
+
+<p>
+We can start the synthesis. The first step is to read the RTL codes.
+For that, you need to set the <code>init_hdl_search_path</code> attribute and then use the command <code>read_hdl</code> to read the rtl code.
+You can use the following tcl command:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set_attribute init_hdl_search_path ../rtl/
+read_hdl -vhdl {NOC_3D_PACKAGE.vhd dff.vhd dummy_ni.vhd}
+</pre>
+</div>
+
+<p>
+It is common practice to gate a group of flip-flops with a control signal to reduce unnecessary clock toggling.
+Clock gating helps to reduce power dissipation by turning off the registers when they are idle. 
+Clock gating should be enabled before the design is elaborated.
+Elaboration builds data structures, derives registers in the design, 
+performs higher-level HDL optimizations.
+During elaboration, Genus identifies the clock gating registers from the design's RTL netlist and determines when these registers are inactive.
+</p>
+
+<p>
+You can use the following command to enable the clock gating:
+set_db lp_insert_clock_gating true
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set_attribute lp_insert_clock_gating true 
+</pre>
+</div>
+
+<p>
+Now, we can elaborate the design: 
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">elaborate dummy_ni
+</pre>
+</div>
+<p>
+The elaborate command elaborates the top-level design and all of its references.
+</p>
+
+<p>
+Before we can go forward and add some constraint to our design, it is a good idea to uniquify our design and define the clock gated cells from our library of standard cells. 
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">uniquify /designs/dummy_ni/ -verbose
+set_attribute lp_clock_gating_cell [lindex [find / -libcell CLKGATE_X4] 0] /designs/dummy_ni/
+</pre>
+</div>
+
+<p>
+The "uniquify" command is used to ensure that each instance of a design within a hierarchy has a unique name.
+Alsp, we choose the clock gating cell, CLKGATE_X4, from the library of the standard cells and set it using <code>lp_clock_gating_cell</code> attribute.
+</p>
+
+<p>
+We also set <code>external_pin_cap</code> and <code>fixed_slew</code> attributes as follows:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set_attribute external_pin_cap 24 [find -port ports_out/*]
+set_attribute fixed_slew 0.1 [find -port ports_in/*]
+</pre>
+</div>
+<p>
+<code>external_pin_cap</code> indicates the external capacitive load (in femtofarads) due to pins that are connected to this port.
+<code>fixed_slew</code> determines the maximum and minimum rise and fall slew times for given ports. 
+</p>
+
+<p>
+Now, we can define a set of design constraints in tool command language (Tcl).
+These commands can be either read in as .sdc file or can be copied into the Genus prompt.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">create_clock [get_ports clk]  -period 2.0  -waveform {0 1} -name clk
+
+set_max_transition 0.3 [current_design];
+
+set_clock_uncertainty 0.025  -setup [get_clocks clk]
+set_clock_uncertainty 0.025  -hold [get_clocks clk]
+set_clock_transition -fall 0.04 [get_clocks clk]
+set_clock_transition -rise 0.04 [get_clocks clk]
+
+set_dont_touch clk
+set_dont_touch rst
+
+set_clock_latency -max -source 0.4 [get_clocks clk] 
+set_output_delay -max -clock clk  0.05 [all_outputs]
+set_false_path -from [get_ports rst]
+
+check_timing
+</pre>
+</div>
+
+<p>
+Use <code>man</code> to get a description of each command that you used to define constraints for your design, e.g., <code>man set_clock_uncertainty</code>. 
+</p>
+
+<p>
+Now, we can synthesize the design using the following commands:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set_db syn_map_effort low
+syn_generic 
+syn_map
+syn_opt
+</pre>
+</div>
+
+<p>
+<code>syn_generic</code> maps the design to generic cells. <code>syn_map</code> maps the generics to technology. <code>syn_opt</code> does the post-mapping optimization.
+</p>
+
+
+<p>
+You can open the gui using <code>gui_show</code>.
+To view the schematic of the design, right click of <code>Hier cell</code> and choose <code>schematic view</code> and then <code>In Main</code>.
+</p>
+
+<p>
+In the next step, you can check the characteristics of your design. 
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">report timing &gt; ./reports/time_dummy.rpt
+report area &gt; ./reports/area_dummy.rpt
+report gates &gt; ./reports/gates_dummy.rpt
+report clock_gating &gt;  ./reports/clock_gating_dummy.rpt
+report power &gt;  ./reports/power_dummy.rpt
+</pre>
+</div>
+
+
+<p>
+The final step, is to save the design, netlist, and sdf file.
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">write_hdl &gt; results/dummy_netlist.v
+write_sdc &gt; results/post_syn_dummy.sdc
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgeca0d36" class="outline-3">
+<h3 id="orgeca0d36"><span class="section-number-3">2.2.</span> Place and Route of PE</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+In this section, we run the place and route of the dummy module. Redirect to do_pr directory and create some sub-directories:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">cd ../do_pr
+mkdir results reports log
+</pre>
+</div>
+
+<p>
+Now, Create a <code>sourceme_inno.csh</code> file and copy the following commands in it. Then, source the file to do the setup:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">setenv LM_LICENSE_FILE "28211@item0096"
+source /eda/cadence/2022-23/scripts/INNOVUSEXPORT_21.35.000_RHELx86.csh
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-shell">source sourceme_inno.csh
+</pre>
+</div>
+
+<p>
+Now, you can start the tool:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">innovus -log log/
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org5e405a4" class="outline-4">
+<h4 id="org5e405a4"><span class="section-number-4">2.2.1.</span> Initialize the design</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<p>
+First, you should initialize the design. You can use GUI or the following TCL commands:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set init_lef_file {../../../0_FreePDK45/LEF/NangateOpenCellLibrary.lef}
+set init_gnd_net VSS
+set init_pwr_net VDD
+
+set init_verilog ../do_syn/results/dummy_netlist.v
+set init_top_cell dummy_ni
+
+set init_mmmc_file dummy.view
+
+init_design
+</pre>
+</div>
+
+<p>
+<code>dummy.view</code> file contents are as follows:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">create_library_set -name typical -timing {../../../0_FreePDK45/CCS/NangateOpenCellLibrary_typical_ccs.lib}
+create_constraint_mode -name mysdc -sdc_files {../do_syn/results/post_syn_dummy.sdc}
+create_delay_corner -name default -library_set {typical}
+create_analysis_view -name ana1 -constraint_mode {mysdc} -delay_corner {default}
+set_analysis_view -setup {ana1} -hold {ana1}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5596c86" class="outline-4">
+<h4 id="org5596c86"><span class="section-number-4">2.2.2.</span> Floorplanning</h4>
+<div class="outline-text-4" id="text-2-2-2">
+<p>
+The next step is to define the floorplan of your unit. You can use the following tcl command to do so:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">floorplan -d 300 275 5 5 5 5
+</pre>
+</div>
+<p>
+Using this command, you define a floorplan with die box size of 300 x 275 and the spacing, in micrometer, between the die edge.
+</p>
+
+
+<p>
+You can also specify the metal layers for the partition pin. For example, the following commands specify metal layer 2 to top and bottom side and metal 3 to right and left sides.
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">setPinConstraint -cell dummy_ni -side {top bottom} -layer {metal2}
+setPinConstraint -cell dummy_ni -side {right left} -layer {metal3}
+</pre>
+</div>
+
+
+<p>
+Next, you should do the power planning.
+In the first step, you should use <code>globalNetConnect</code> command to connect PG (Power/Ground) pins to the specified global net, which is either a power or ground net.
+Run the following commands:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">globalNetConnect VDD -type pgpin -pin VDD -all
+globalNetConnect VSS -type pgpin -pin VSS -all
+globalNetConnect VDD -type tiehi
+globalNetConnect VSS -type tielo
+</pre>
+</div>
+<p>
+First and second commands specify that the power and ground pins listed with the -pin parameter are to be connected the VDD and VSS nets.
+With <code>-all</code> option, you apply the global net connection to all instances in the design.
+Third and forth commands specifiy that tie high (1'b1) and tie low (1'b0) pins are to be connected to VDD and VSS nets.
+</p>
+
+<p>
+In the second step, you should add power rings and stripes. Here, you should specify the metal layers to route the rings and strips, spacing, width of the wires and so on. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">addRing -nets {VDD VSS} -follow core -layer {bottom metal5 top metal5 right metal6 left metal6} -width 1 -spacing 1 -offset 1
+addStripe -nets {VDD VSS} -layer metal5 -width 4 -spacing 2 -set_to_set_distance 30 -xleft_offset 20 -xright_offset 20
+addStripe -nets {VDD VSS} -direction {horizontal} -layer metal6 -width 4 -spacing 2 -set_to_set_distance 30 -ytop_offset 20 -ybottom_offset 20
+</pre>
+</div>
+
+<p>
+Now, you should use <code>sroute</code> command to route power structures in the design. You should use this command after creating power rings and power stripes.
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">sroute -allowLayerChange true
+</pre>
+</div>
+
+<p>
+Finally, you can check the timing of your design and if it fits your expectations save it. Run the following commands to do so:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set step "floorplan"
+set rpt_dir "./reports/dummy_design/$step"
+timeDesign -prePlace -outDir $rpt_dir -prefix $step
+report_timing -format {instance pin cell net load slew delay arrival}
+timeDesign -prePlace -hold -expandedViews -numPaths 10 -outDir $rpt_dir -prefix $step
+reportGateCount -stdCellOnly -outfile $rpt_dir/stdGateCount.rpt
+
+#Drc checking
+verify_drc
+
+#Design saving
+saveDesign results/dummy_design/$step.enc
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfeef08d" class="outline-4">
+<h4 id="orgfeef08d"><span class="section-number-4">2.2.3.</span> Placement</h4>
+<div class="outline-text-4" id="text-2-2-3">
+<p>
+In this step, you should place the standard cells into your design. Use the following tcl commands to do so:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set_interactive_constraint_modes [all_constraint_modes -active]
+setPlaceMode -congEffort high
+setPlaceMode -placeIOPins 1
+place_opt_design
+</pre>
+</div>
+
+<p>
+<code>set_interactive_constraint_modes</code> command puts the software into interactive constraint entry mode for a list of constraint modes.
+The <code>all_constraint_modes</code> command can be used to generate a list of constraint modes as the argument for <code>set_interactive_constraint_modes</code>.
+In this implementation, we have only one constraint mode, mysdc, which can be observerd by running <code>all_constraint_modes</code> command.
+</p>
+
+
+<p>
+Now, we can check the timing of the design and save the placed design.
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set step "place" 
+set rpt_dir "./reports/dummy_design/$step"
+timeDesign -preCTS -outDir $rpt_dir -prefix $step
+report_timing &gt; reports/place/timing_report_postPlace.rpt
+saveDesign results/dummy_design/$step.enc
+</pre>
+</div>
+
+<p>
+The dummy_ni design is pretty small and it is only to emulate the PEs in a NoC. Therefore, the utilization of the design is very low.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org07bf5c6" class="outline-4">
+<h4 id="org07bf5c6"><span class="section-number-4">2.2.4.</span> Clock-Tree-Synthesis (CTS)</h4>
+<div class="outline-text-4" id="text-2-2-4">
+<p>
+In this step, you should synthesize the clock tree. Run the following tcl commands to do so:
+</p>
+
+<p>
+First, you specify which analysis view you would like to use for setup and hold analysis.
+Since, you have only one view, ana1, then you should set ana1 to both setup and hold analysis.
+</p>
+
+<p>
+Then <code>setAnalysisMode</code> sets global analysis modes for timing analysis. Here, we use different option including CPPR.
+CPPR option fixes the STA tools tendency to take worse case scenarios. For example, a late launch path and an early capture path for setup analysis. 
+Using <code>-cppr both</code>, tools uses Common Path Pessimism Removal for both setup and hold analysis. Use <code>man setAnalysisMode</code> to read the documentations.
+</p>
+
+<p>
+Next, you should define a non-default-rule and set properties of the clock tree, including buffer_cells, target_max_trans and etc.
+After that, you should create a clock tree specification file and source the created file.
+</p>
+
+<p>
+Finally, you should use <code>ccopt_design</code> to synthesize the clock.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">set_analysis_view -setup {ana1} -hold {ana1}
+setAnalysisMode -analysisType onChipVariation -cppr both -checkType setup
+
+cleanupSpecifyClockTree
+
+add_ndr -name default_2x_space -spacing {metal1 0.38 metal2:metal5 0.42 metal6 0.84}
+
+create_route_type -name leaf_rule  -non_default_rule default_2x_space -top_preferred_layer metal4 -bottom_preferred_layer metal2
+create_route_type -name trunk_rule -non_default_rule default_2x_space -top_preferred_layer metal4 -bottom_preferred_layer metal2 -shield_net VSS -shield_side both_side
+create_route_type -name top_rule   -non_default_rule default_2x_space -top_preferred_layer metal4 -bottom_preferred_layer metal2 -shield_net VSS -shield_side both_side
+
+set_ccopt_property route_type -net_type leaf  leaf_rule
+set_ccopt_property route_type -net_type trunk trunk_rule
+set_ccopt_property route_type -net_type top   top_rule
+
+setDesignMode -process 40
+
+set_ccopt_property target_max_trans 0.100
+set_ccopt_property target_skew 0.150
+set_ccopt_property max_fanout 20
+set_ccopt_property update_io_latency 0
+
+set_ccopt_property buffer_cells {BUF_X1 BUF_X2 BUF_X4 BUF_X8 BUF_X16 CLKBUF_X1 CLKBUF_X2}
+set_ccopt_property inverter_cells {INV_X1 INV_X2 INV_X4 INV_X8 INV_X16}
+
+create_ccopt_clock_tree_spec -views {ana1} -file results/ctsSpec_dummy.tcl
+source results/ctsSpec_dummy.tcl
+
+ccopt_design
+</pre>
+</div>
+
+<p>
+As usuall, you should check the timing and save the design in this step:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set step "cts"
+set rpt_dir "./reports/dummy_design/$step"
+timeDesign -postCTS -numPaths 10 -outDir $rpt_dir -prefix $step
+timeDesign -postCTS -hold -numPaths 10 -outDir $rpt_dir -prefix $step
+report_ccopt_clock_trees –file reports/cts/clock_trees.rpt
+report_ccopt_skew_groups –file reports/cts/skew_groups.rpt
+report_timing &gt; reports/cts/timing_report_postCCopt.rpt
+
+saveDesign results/dummy_design/$step.enc
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org61d2a12" class="outline-4">
+<h4 id="org61d2a12"><span class="section-number-4">2.2.5.</span> Routing</h4>
+<div class="outline-text-4" id="text-2-2-5">
+<p>
+After clock tree synthesis, we can route the nets.
+</p>
+
+<p>
+When a clock is propagated, the network insertion delay is computed from the actual gates and interconnects in
+the clock network. <code>set_propagated_clock</code> will cause all clock endpoints in the fanout of the specified object to receive propagated clock timing
+</p>
+
+<p>
+Here, you can use other options for the routing to meet a better timing for your design.
+For example, here the Signal Integrity-driven as well as timing-driven routing is activated.
+</p>
+
+<p>
+We also add filler cells at this stage and correct possible DRC violation using <code>ecoRoute -fix_drc</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">set_propagated_clock [ all_clocks ]
+
+setNanoRouteMode -routeWithSiDriven true
+setNanoRouteMode -routeInsertAntennaDiode true
+setNanoRouteMode -routeAntennaCellName "ANTENNA"
+setNanoRouteMode -routeWithTimingDriven true
+
+routeDesign -globalDetail
+
+setFillerMode -add_fillers_with_drc false 
+addFiller -cell FILLCELL_X8 FILLCELL_X4 FILLCELL_X2 FILLCELL_X1 -prefix FILLER
+ecoRoute -fix_drc
+</pre>
+</div>
+
+<p>
+Now, you can generate some reports and save the design. 
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set step "route" 
+set rpt_dir "./reports/dummy_design/$step"
+timeDesign -postCTS -numPaths 10 -outDir $rpt_dir -prefix $step
+defOut -floorplan -placement -netlist -routing results/dummy_design/$step.def.gz
+saveDesign results/dummy_design/$step.enc
+</pre>
+</div>
+<p>
+The <code>defOut</code> command saves floorplan, routing, etc data to the <code>DEF</code> file. Use <code>man defOut</code> for moew information.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org148c3af" class="outline-4">
+<h4 id="org148c3af"><span class="section-number-4">2.2.6.</span> Extracting LEF, DEF, and timing models</h4>
+<div class="outline-text-4" id="text-2-2-6">
+<p>
+In this step, the implementation of the PE is completed and you should extract the <code>lef</code> and <code>lib</code> files. These files will be used in the next section to use PEs as macros in the NoC design.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">write_lef_abstract ./results/dummy_ni.lef -stripePin -noCutObs -specifyTopLayer metal4 
+set_analysis_view -setup {ana1} -hold {ana1}
+do_extract_model results/dummy_ni.lib -view ana1
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2347cb3" class="outline-2">
+<h2 id="org2347cb3"><span class="section-number-2">3.</span> NoC Implementation</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+The goal of this section is to implement a NoC with PE macros generated in previous section.
+In this section, we go through all the steps of the design implementation from design synthesis to routing of the design.
+</p>
+
+
+<pre class="example" id="orgf9b65fa">
+NOTE:
+Synthezing a large design may take quite a long time!
+You can use a Terminal Multiplexer, e.g., tmux, where you can detach the session and tmux keep the session alive.
+At any point in time you are able to attach that session and start working from where you were. 
+
+Some basic shell commands to use tmux are as follows.
+
++ Create a new session: tmux new -s my_session_name  
++ Leave the session without terminating it (detach): C-b - d (press and hold ctrl key and press b and then press d)
++ Come back to the session: tmux attach-session -t my_session_name
++ Terminate the session: use exit or C-d key binding
++ To kill a session or all the sessions: tmux kill-session -t my_session_name
++ List the active sessions: tmux ls
+</pre>
+</div>
+
+
+
+<div id="outline-container-org4abeed7" class="outline-3">
+<h3 id="org4abeed7"><span class="section-number-3">3.1.</span> Synthesis</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Redirect to <code>do_syn</code> directory:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">cd do_syn
+</pre>
+</div>
+
+<p>
+Source the sourceme.csh file:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">source sourceme_gen.csh
+</pre>
+</div>
+
+<p>
+Now you can start the Genus in legacy User Interface. This is an interface specific for Genus.
+You can use the <code>-log</code> option in genus to add an string to <code>.log</code> and <code>.cmd</code> file.
+This way you can create unique log files.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">genus -legacy_ui -log 1st_syn
+</pre>
+</div>
+
+<p>
+As usual you should first, set the <code>lib_search_path</code>, and <code>init_hdl_search_path</code> attributes:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set_attribute lib_search_path {../../../0_FreePDK45/CCS}
+set_attribute init_hdl_search_path ../rtl/
+</pre>
+</div>
+
+<p>
+Now, you should read the timing library and the rtl design:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set_attribute library {NangateOpenCellLibrary_typical_ccs.lib}
+read_hdl {NOC_3D_PACKAGE.vhd TURNS_3D_NOC.vhd dxyu_routing.vhd xyz_routing.vhd zxy_routing.vhd uxyd_routing.vhd routing_calc.vhd fifo.vhd vc_input_buffer.vhd crossbar.vhd seq_packet_counter.vhd rr_arbiter_no_delay.vhd credit_count_single.vhd vc_output_allocator_high_perf.vhd switch_allocator.vhd header_arbiter_and_decoder.vhd vc_allocator_high_perf.vhd output_register.vhd arbiter.vhd router_pl.vhd full_noc_2D.vhd top_2D.vhd} -vhdl
+</pre>
+</div>
+
+<p>
+You can use the following command to enable the clock gating:
+set_db lp_insert_clock_gating true
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set_attribute lp_insert_clock_gating true 
+</pre>
+</div>
+
+<p>
+To enable support for synthesis of constant expressions of <code>real</code> type, you should set the following attribute to true:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set_attr hdl_enable_real_support true
+</pre>
+</div>
+
+
+<p>
+Now, we can elaborate the top design: 
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">elaborate top_design
+</pre>
+</div>
+<p>
+The elaborate command elaborates the top-level design and all of its references.
+</p>
+
+<p>
+Before, you can proceed, let us set some attributes and uniquify the design:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set_attribute external_pin_cap 24 [find -port ports_out/*]
+set_attribute fixed_slew 0.1 [find -port ports_in/*]
+uniquify /designs/top_design/ -verbose
+set_attribute lp_clock_gating_cell [lindex [find / -libcell CLKGATE_X4] 0] /designs/top_design/
+</pre>
+</div>
+
+
+<p>
+Now, you can add the design constraints:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">create_clock [get_ports clk]  -period 24.0  -waveform {0 12} -name clk
+
+set_max_transition 0.3 [current_design];  #0.4-0.5
+
+set_clock_uncertainty 0.025  -setup [get_clocks clk]
+set_clock_uncertainty 0.025  -hold [get_clocks clk]
+set_clock_transition -fall 0.04 [get_clocks clk]
+set_clock_transition -rise 0.04 [get_clocks clk]
+
+set_dont_touch clk
+set_dont_touch rst
+
+set_clock_latency -max -source 0.8 [get_clocks clk] 
+
+#set_input_delay -max -clock clk  0.05 [get_ports {ctr_hu eps wi hi}]
+set_output_delay -max -clock clk  0.05 [all_outputs]
+
+set_false_path -from [get_ports rst]
+
+check_timing
+</pre>
+</div>
+
+<p>
+Now, we can synthesize the design using the following commands:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set_db syn_map_effort low
+syn_generic 
+syn_map
+syn_opt
+</pre>
+</div>
+
+<p>
+Finally, as usual you can create some repoerts and save the gate-level netlist and sdf files: 
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">report timing &gt; ./reports/time_top.rpt
+report area &gt; ./reports/area_top.rpt
+report gates &gt; ./reports/gates_top.rpt
+report clock_gating &gt;  ./reports/clock_gating_top.rpt
+report power &gt;  ./reports/power_top.rpt
+write_hdl &gt; results/top_netlist.v
+write_sdc &gt; results/post_syn_top.sdc  
+</pre>
+</div>
+
+<p>
+Now, you can close the tool. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc2b9829" class="outline-3">
+<h3 id="orgc2b9829"><span class="section-number-3">3.2.</span> Place and Route</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+As usual, go to the directory where you plan to run the tool (<code>do_pr</code> in this case) and create sub directories to organize the date. For example:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">cd NoC_2D/do_pr
+</pre>
+</div>
+
+<p>
+Now you can source the configuration file and start the innovus software:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">source source_inno.csh
+</pre>
+</div>
+
+<p>
+Now you can start the tool
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">innovus -log log/
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orga30688b" class="outline-4">
+<h4 id="orga30688b"><span class="section-number-4">3.2.1.</span> Read in the design</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<p>
+Let us first read in the design. You can use gui to do so and generate the <code>.view</code> file:
+</p>
+
+<p>
+First, you should set <code>init_design_uniquify</code> to 1:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set init_design_uniquify 1
+</pre>
+</div>
+<p>
+This command helps to ensure that all instances and nets in the design have unique names, avoiding naming conflicts and potential issues during the subsequent stages of the physical design flow.
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-tcl">set step "import_top"
+set init_lef_file {../../../0_FreePDK45/LEF/NangateOpenCellLibrary.lef results/dummy_ni.lef}
+set init_gnd_net VSS
+set init_pwr_net VDD
+
+set init_verilog ../do_syn/results/top_netlist.v
+set init_top_cell top_design
+
+set init_mmmc_file top.view
+
+init_design
+saveDesign ./results/$step.enc
+</pre>
+</div>
+
+<p>
+<code>top.view</code> file contents should be like that:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">create_library_set -name typical -timing {../../../0_FreePDK45/CCS/NangateOpenCellLibrary_typical_ccs.lib results/dummy_ni.lib}
+create_constraint_mode -name mysdc -sdc_files {../do_syn/results/post_syn_top.sdc}
+create_delay_corner -name default -library_set {typical}
+create_analysis_view -name ana1 -constraint_mode {mysdc} -delay_corner {default}
+set_analysis_view -setup {ana1} -hold {ana1}
+</pre>
+</div>
+
+<p>
+Now, you can observe that there are 16 macros in your design, dl[0].ni to dl[15].ni:
+</p>
+
+
+<div id="org19ff575" class="figure">
+<p><img src="figs/read_design.png" alt="read_design.png" />
+</p>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org8e5044a" class="outline-4">
+<h4 id="org8e5044a"><span class="section-number-4">3.2.2.</span> Floorplanning</h4>
+<div class="outline-text-4" id="text-3-2-2">
+<p>
+Use the following tcl commands:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set step "floorplan_top"
+set rpt_dir "./reports/"
+
+setPinConstraint -side {top bottom} -layer {M2}
+setPinConstraint -side {right left} -layer {M3}
+floorPlan -r 1 0.6 20 20 20 20
+snapFPlan -guide -block -stdCell -ioPad -pin -pinGuide -routeBlk -pinBlk -ptnCore -placeBlk -macroPin
+</pre>
+</div>
+
+<p>
+The <code>setPinConstraint</code> command sets constraints for I/O pins.
+For example the following command set the pins in top and bottom core sides to M4 later.
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">setPinConstraint -cell top_design -side {top bottom} -layer {M4}
+</pre>
+</div>
+</div>
+
+<ol class="org-ol">
+<li><a id="org5ef979a"></a>Macro Placement<br />
+<div class="outline-text-5" id="text-3-2-2-1">
+<p>
+In this part, we would like to use a systematic approach to place the macros:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">selectInst {dl[0].ni}
+</pre>
+</div>
+<p>
+<code>selectInst</code> selects an instance and highlights it in the design display window.
+</p>
+
+
+<p>
+Now, from the menu select <b>floorplan</b> then <b>Relative Floorplan</b> and  <b>Edit Constraints&#x2026;</b>.
+</p>
+
+
+<div id="orga545324" class="figure">
+<p><img src="figs/relative_fp.png" alt="relative_fp.png" />
+</p>
+</div>
+
+<p>
+The Relative Floorplan feature allows you to place macros relative to other reference objects. If the reference object moves, the relative placement macros will move with it and constraints to the object.
+Use relative floorplan constraints to place the array of blocks at the top right.
+</p>
+
+<p>
+The  <code>create_relative_floorplan</code> command captures and defines the placement relationship of floorplan objects independently from the actual coordinates in a floorplan, and resizes modules or blackboxes based on other floorplanobjects, even outside the core boundary.
+You can use this command after importing the design. For example, this command consider the following command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">create_relative_floorplan -place {dl[0].ni} -ref_type core_boundary -horizontal_edge_separate {2 -30 2} -vertical_edge_separate {2 -30  2}
+</pre>
+</div>
+<p>
+It places the dl[0].ni proportional to core bounderies so that the 2nd edge of the reference and
+2nd edge of the object dl[0].ni has offset of -30 in horizontal direction.
+Similarly, the 2nd edge of the reference and 2nd edge of the object dl[0].ni has offset of -30 in vertical direction.
+</p>
+
+<p>
+From menu select <b>Floorplan</b> then <b>Edit Floorplan</b> and <b>Set Instance Placement Status</b>.
+</p>
+
+
+<div id="org07f7d2e" class="figure">
+<p><img src="figs/softfixed.png" alt="softfixed.png" />
+</p>
+</div>
+
+<p>
+The softFixed placement status means that instances cannot be moved by global placement and can only be moved by the legalization step of detail placement.
+Instances with this status can also be upsized by optimization.
+</p>
+
+<p>
+Now, use <code>delete_relative_floorplan -all</code> command to delete the created relative floorplan constraints.
+</p>
+
+<p>
+Then, we select the macros we would like to place relative to the dl[0].ni:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">deselectAll
+selectInst {dl[15].ni}
+selectInst {dl[14].ni}
+selectInst {dl[13].ni}
+selectInst {dl[12].ni}
+selectInst {dl[11].ni}
+selectInst {dl[10].ni}
+selectInst {dl[9].ni}
+selectInst {dl[8].ni}
+selectInst {dl[7].ni}
+selectInst {dl[6].ni}
+selectInst {dl[5].ni}
+selectInst {dl[4].ni}
+selectInst {dl[3].ni}
+selectInst {dl[2].ni}
+selectInst {dl[1].ni}
+selectInst {dl[0].ni}
+</pre>
+</div>
+
+<p>
+Then, from the memu select <b>Floorplan</b>, <b>Relative Floorplan</b> and the  <b>Define Array Constraint</b>.
+</p>
+
+
+<div id="orgd687057" class="figure">
+<p><img src="figs/array_const.png" alt="array_const.png" />
+</p>
+</div>
+
+<pre class="example" id="org8d773e0">
+NOTE:
+Objects can be placed at specific coordinates using the Attribute Editor or the placeInstance command.
+</pre>
+
+
+<p>
+Finally, use the following tcl commands:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">deselectAll
+clearRelativeFPlan
+</pre>
+</div>
+</div>
+</li>
+
+
+<li><a id="org551adcc"></a>Placement and routing blockage<br />
+<div class="outline-text-5" id="text-3-2-2-2">
+<p>
+Placement halos are placement blockages around blocks which prevent cells from being
+placed inside the halo area. From the menu select <b>Floorplan</b> then  <b>Edit Floorplan</b> and  <b>Edit Halo</b>.
+Fill the form as follows:
+</p>
+
+
+<div id="org27cdeab" class="figure">
+<p><img src="figs/halo.png" alt="halo.png" />
+</p>
+</div>
+
+<p>
+You can also use the following tcl command:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">addHaloToBlock {10 10 10 10} -fromInstBox -allBlock
+</pre>
+</div>
+
+<p>
+It is also possible to use placement blockage and routing blockage by clicking on <img src="figs/placement_blk.png" alt="placement_blk.png" /> and  <img src="figs/routing_blk.png" alt="routing_blk.png" /> icons.
+Unlike halo that prevents placement blockage associated with a block, a placement blockage prevents cell placement in a specific area.
+Use placement blockage icon or use key binding (shift + Y) to create a placement blockage on one of the macros edges. Press (A) to to come back to Select by Box mode and double click on the area that you have created.
+In the Attribute Edditor windows, change the Type from Hard to Soft.
+</p>
+
+<p>
+Hard blockage means no standard cells can be placed in this area, while the soft blockage prevents global placement from placing cells in the area but
+allows placement refinement, timing optimization and clock tree synthesis to place cells in this area as needed.
+</p>
+</div>
+</li>
+
+
+<li><a id="org1182385"></a>Power Routing<br />
+<div class="outline-text-5" id="text-3-2-2-3">
+<p>
+First, the global nets for power and ground must be assigned for the entire design. This can be done using the following commands:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">globalNetConnect VDD -type pgpin -pin VDD -all
+globalNetConnect VSS -type pgpin -pin VSS -all
+globalNetConnect VDD -type tiehi
+globalNetConnect VSS -type tielo
+</pre>
+</div>
+
+<p>
+Now with the power and ground nets logically assigned, power planning can be done. In
+this design, power and ground rings are added around the core area. Power and ground stripes are also added to create the power grid.
+The <code>addRing</code> and <code>addStripe</code> commands are used to create the power grid.
+You can use the following tcl commands to add power rings and stipes to the design:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">addRing -nets {VDD VSS} -follow core -layer {bottom metal5 top metal5 right metal6 left metal6} -width 5 -spacing 2 -offset 4
+addStripe -nets {VDD VSS} -layer metal5 -width 10 -spacing 10 -set_to_set_distance 120 -xleft_offset 20 -xright_offset 20
+addStripe -nets {VDD VSS} -direction {horizontal} -layer metal6 -width 5 -spacing 10 -set_to_set_distance 120 -ytop_offset 50 -ybottom_offset 50
+</pre>
+</div>
+
+
+
+<div id="org1224709" class="figure">
+<p><img src="figs/power_planning.png" alt="power_planning.png" />
+</p>
+</div>
+
+<p>
+Finally, you can use the speciall route to route the power and ground structure. Use the following command:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">sroute -nets {VDD VSS} -allowLayerChange true
+</pre>
+</div>
+<p>
+Your floorplan should look like this.
+</p>
+
+
+<div id="org08d360c" class="figure">
+<p><img src="figs/sroute.png" alt="sroute.png" />
+</p>
+</div>
+
+
+
+<p>
+Before, you can save the design, you should check the design for DRC:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">verify_drc
+</pre>
+</div>
+
+
+<p>
+Finally, you should report and save the design:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">analyzeFloorplan -outfile $rpt_dir/analyzeFloorplan_top.rpt
+saveDesign ./results/$step.enc
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+
+
+<div id="outline-container-orga80ee61" class="outline-4">
+<h4 id="orga80ee61"><span class="section-number-4">3.2.3.</span> Placement of Standard Cells</h4>
+<div class="outline-text-4" id="text-3-2-3">
+<p>
+After the floorplanning, you can place the design. Use the following tcl command file to place the standard cells:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set step "place_top" 
+set rpt_dir "./reports/"
+
+setPlaceMode -congEffort high
+setPlaceMode -fp false -placeIOPins 1
+
+#Place the design
+place_opt_design
+
+## Reporting and saving the design
+timeDesign -preCTS -outDir $rpt_dir -prefix $step
+report_timing &gt; reports/timing_report_$step.rpt
+saveDesign ./results/$step.enc
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgb2f2aa4" class="outline-4">
+<h4 id="orgb2f2aa4"><span class="section-number-4">3.2.4.</span> Clock Tree Synthesis</h4>
+<div class="outline-text-4" id="text-3-2-4">
+<p>
+In this section, we will go through a basic flow of clock tree synthesis.
+</p>
+
+<p>
+The clock tree synthesis contraints are derived from the <code>.sdc</code> file that is read in with the design at the very beginning.
+For example, you have to choose what buffers to use and which types of clock routing to implement.
+</p>
+
+<div class="NOTE" id="orgbdf623e">
+<p>
+Properties other than that of can be derived from <code>.sdc</code> file, can be saved in a <code>.ccopt</code> file.
+You should source this file before using <code>ccopt_design</code> command.
+</p>
+
+</div>
+
+<p>
+First, you should set your timing option. <code>setAnalysisMode</code> command sets the global analysis modes for timing analysis.
+Here, the analysis type is set to on-chip variation. In this scenario, delay is calculated in one path based on maximum operating conditions and is calculated for another path based on minimum operating condition.
+Besides, the <code>cppr</code> option is set to both. This options removes the pessimistic scenarios which never happens for both hold ans setup analysis.
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set_analysis_view -setup {ana1} -hold {ana1}
+setAnalysisMode -analysisType onChipVariation -cppr both -checkType setup
+cleanupSpecifyClockTree
+</pre>
+</div>
+
+<p>
+Next, you can adds a non-default rules. These rules are helpful to harden the sensitive nets like clock nets.
+The clock tree structure is divided into Top, Trunk, Leaf. 
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">add_ndr -name default_2x_space -spacing {metal1 0.38 metal2:metal5 0.42 metal6 0.84}
+create_route_type -name leaf_rule  -non_default_rule default_2x_space -top_preferred_layer metal4 -bottom_preferred_layer metal2
+create_route_type -name trunk_rule -non_default_rule default_2x_space -top_preferred_layer metal4 -bottom_preferred_layer metal2 -shield_net VSS -shield_side both_side
+create_route_type -name top_rule   -non_default_rule default_2x_space -top_preferred_layer metal4 -bottom_preferred_layer metal2 -shield_net VSS -shield_side both_side
+set_ccopt_property route_type -net_type leaf  leaf_rule
+set_ccopt_property route_type -net_type trunk trunk_rule
+set_ccopt_property route_type -net_type top   top_rule
+setDesignMode -process 40
+</pre>
+</div>
+
+
+
+<p>
+Before you can create the clock tree by running the command <code>ccopt_design</code>, some other properties should be set:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set_ccopt_property target_max_trans 0.150
+set_ccopt_property target_skew 0.150
+set_ccopt_property max_fanout 20
+set_ccopt_property update_io_latency 0
+
+set_ccopt_property buffer_cells {BUF_X1 BUF_X2 BUF_X4 BUF_X8 BUF_X16 CLKBUF_X1 CLKBUF_X2}
+set_ccopt_property inverter_cells {INV_X1 INV_X2 INV_X4 INV_X8 INV_X16}
+</pre>
+</div>
+
+<p>
+Traditionally, the balanced skew is used to balance the clock tree. In this case, the insertion delay is tried to be close to zero.
+Thus, the clock design is independent of the data path design. However, it can be costly, especially in large designs.
+The utilization of skew to meet the timing of the design is called <i>usefullskew</i>.
+</p>
+
+<p>
+Here, we use usefulskew method: 
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">setOptMode -usefulSkew true;
+setOptMode -usefulSkewCCOpt extreme;
+ccopt_design
+</pre>
+</div>
+
+<p>
+Next, look into the final timing summary (WNS is the worst negative slack of the timing path, and TNS is the total negative slack).
+It is possible to check the timing using <code>time_design -post_cts</code> for the setup time check and <code>time_design -post_cts -hold</code> for the hold time check.
+If you have a hold violation (negative slack in hold time), run the following optimization command:
+<code>opt_design -post_cts -hold</code> 
+</p>
+
+<p>
+Let us have a look at the clock tree results. Make sure you are in the physical view.
+Select <b>clock</b> - <b>CCopt Clock Tree Debugger</b> from the menu.
+Click Ok on the appeared windows using default values.
+</p>
+
+
+<div id="org6e88d3a" class="figure">
+<p><img src="figs/cts1.png" alt="cts1.png" />
+</p>
+</div>
+
+<ul class="org-ul">
+<li>Go through the following steps to get familier with the debugger:</li>
+<li>Use "f" on keyboard to fir into the window.</li>
+<li>Use “Z” and “Shift+Z” on keyboard to zoom in and out.</li>
+<li>You can zoom in to the buffers by clicking and dragging the right mouse button over an area.</li>
+<li>Select a leaf cell or a clock buffer in clock tree debugger and notice the innovus physical view zooms to that cell (make sure the strandard cell visibility is selected in left side of the main innovus windows.)</li>
+<li>Select the innovus main windows and press "f12" to dim the background.</li>
+<li>from Gebugger wondows click on <b>View</b> - <b>Enable clock path browser</b>. In the clock path browser, select the skew group. Right-click on a path, click on highlight, Max Path, select highlight color.
+The path is highlighted in debugger windows. The same path is also highlighted in Innovus main window. Press "f" and then "f12".
+You can clear the highlights in the main innovus window by selecting <b>view</b> - <b>clear hightlight</b> - <b>clear all</b>.</li>
+</ul>
+
+
+
+<div id="orgca8c359" class="figure">
+<p><img src="figs/cts2.png" alt="cts2.png" />
+</p>
+</div>
+
+<p>
+Finally, we can save the results after the cts:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">set step "cts_top"
+set rpt_dir "./reports/"
+report_ccopt_clock_trees &gt; $rpt_dir/ccopt_top.rpt 
+report_power -clock_network all &gt; $rpt_dir/power_top.rpt 
+timeDesign -postCTS -numPaths 10 -outDir $rpt_dir -prefix $step
+timeDesign -postCTS -hold -numPaths 10 -outDir $rpt_dir -prefix $step
+
+##Design saving
+saveDesign ./results/$step.enc
+
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orge0b3044" class="outline-4">
+<h4 id="orge0b3044"><span class="section-number-4">3.2.5.</span> Routing</h4>
+<div class="outline-text-4" id="text-3-2-5">
+<p>
+Now, we can use the following tcl commands to route the design.
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set step "route" 
+set rpt_dir "./reports/"
+
+
+
+setNanoRouteMode -routeWithSiDriven true
+setNanoRouteMode -routeInsertAntennaDiode true
+setNanoRouteMode -routeAntennaCellName "ANTENNA"
+setNanoRouteMode -routeWithTimingDriven true
+
+routeDesign -globalDetail
+
+setFillerMode -add_fillers_with_drc false -ecoMode true 
+addFiller -cell FILLCELL_X8 FILLCELL_X4 FILLCELL_X2 FILLCELL_X1 -prefix FILLER
+</pre>
+</div>
+
+<p>
+<code>setFillerMode</code> controls some aspects of how the software adds filler cells. Here, 
+</p>
+
+<p>
+you can check the timing of your design and save the design as follows:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">timeDesign -postCTS -numPaths 10 -outDir $rpt_dir -prefix $step\_setup
+timeDesign -postCTS -hold -outDir $rpt_dir -prefix $step\_hold
+defOut -floorplan -placement -netlist -routing ./results/$step.def.gz
+saveDesign ./results/$step.enc
+</pre>
+</div>
+
+<p>
+You can notice the violating paths for hold timing.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org16afe8e" class="outline-4">
+<h4 id="org16afe8e"><span class="section-number-4">3.2.6.</span> Optimization</h4>
+<div class="outline-text-4" id="text-3-2-6">
+<p>
+Now, let's fix the violating path by optimizing the design. Use the following commands to do so:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">set step "routeopt_top" 
+set rpt_dir "./reports/"
+
+deleteFiller
+
+setOptMode -holdTargetSlack 0.075
+setOptMode -fixHoldAllowSetupTnsDegrade false
+optDesign -postRoute -hold -outDir $rpt_dir -prefix $step\HoldIncr -expandedViews
+
+setFillerMode -add_fillers_with_drc false -ecoMode true 
+addFiller -cell FILLCELL_X8 FILLCELL_X4 FILLCELL_X2 FILLCELL_X1 -prefix FILLER
+
+timeDesign -postRoute -expandedViews -outDir $rpt_dir -prefix $step
+timeDesign -postRoute -hold -expandedViews -outDir $rpt_dir -prefix $step\_hold
+
+report_power -outfile $rpt_dir/$step\_power.rpt
+report_area -out_file $rpt_dir/$step\_area.rpt
+
+saveDesign ./results/$step.enc
+</pre>
+</div>
+
+<p>
+We can check the timing using the timing debugger. In menu, choose <b>Timing</b> - <b>Report Timing&#x2026;</b>. Fill the form like the figure below and click on ok.
+This will generate the timing report for post-routing.
+</p>
+
+
+<div id="org676bfdf" class="figure">
+<p><img src="figs/report_timing.png" alt="report_timing.png" />
+</p>
+</div>
+
+
+<p>
+In menu, choose <b>Timing</b> - <b>Debug Timing &#x2026;</b>. After calculating the delay the Timing Debug window will appear.
+</p>
+
+
+<div id="org176b322" class="figure">
+<p><img src="figs/timing_debug.png" alt="timing_debug.png" />
+</p>
+</div>
+
+
+<p>
+Here, you can see the Failing paths, Worst negative slack and total negative slack. The red bars in the histogram shows the failing paths.
+In the path list section, you can find the paths which fail the timing. Click on one of them. The path is highlighted in the main windows and the Timing Path Analyzer window will appear.
+</p>
+
+<p>
+Now you can close the timing debugger windows.
+</p>
+
+
+<p>
+And finally, you can verify the design:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">verify_drc   -report reports/top.drc
+verify_connectivity -report reports/top.connect
+
+streamOut results/top_design.gds -mapFile streamOut.map -libName my_library -units 2000 -mode ALL
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
