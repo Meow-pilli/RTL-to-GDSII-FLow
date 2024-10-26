@@ -1,0 +1,18 @@
+47. Printing statistics.
+
+=== adder ===
+
+   Number of wires:                  4
+   Number of wire bits:             16
+   Number of public wires:           4
+   Number of public wire bits:      16
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  8
+     $_AND_                          4
+     $_XOR_                          4
+
+   Area for cell type $_AND_ is unknown!
+   Area for cell type $_XOR_ is unknown!
+

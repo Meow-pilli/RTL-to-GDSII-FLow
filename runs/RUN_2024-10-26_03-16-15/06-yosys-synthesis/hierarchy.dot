@@ -1,0 +1,21 @@
+digraph "adder" {
+label="adder";
+rankdir="LR";
+remincross=true;
+n3 [ shape=octagon, label="Cout", color="black", fontcolor="black" ];
+n4 [ shape=octagon, label="sum", color="black", fontcolor="black" ];
+n5 [ shape=octagon, label="b", color="black", fontcolor="black" ];
+n6 [ shape=octagon, label="a", color="black", fontcolor="black" ];
+c10 [ shape=record, label="{{<p7> A|<p8> B}|$2\n$and|{<p9> Y}}",  ];
+c11 [ shape=record, label="{{<p7> A|<p8> B}|$1\n$xor|{<p9> Y}}",  ];
+x0 [shape=point, ];
+x1 [shape=point, ];
+c10:p9:e -> x1:w [color="black", fontcolor="black", style="setlinewidth(3)", label=""];
+c11:p9:e -> x0:w [color="black", fontcolor="black", style="setlinewidth(3)", label=""];
+x1:e -> n3:w [color="black", fontcolor="black", style="setlinewidth(3)", label=""];
+x0:e -> n4:w [color="black", fontcolor="black", style="setlinewidth(3)", label=""];
+n5:e -> c10:p8:w [color="black", fontcolor="black", style="setlinewidth(3)", label=""];
+n5:e -> c11:p8:w [color="black", fontcolor="black", style="setlinewidth(3)", label=""];
+n6:e -> c10:p7:w [color="black", fontcolor="black", style="setlinewidth(3)", label=""];
+n6:e -> c11:p7:w [color="black", fontcolor="black", style="setlinewidth(3)", label=""];
+}

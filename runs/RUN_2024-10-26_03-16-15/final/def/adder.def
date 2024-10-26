@@ -1,0 +1,92 @@
+VERSION 5.8 ;
+DIVIDERCHAR "/" ;
+BUSBITCHARS "[]" ;
+DESIGN adder ;
+UNITS DISTANCE MICRONS 1000 ;
+DIEAREA ( 0 0 ) ( 24830 35550 ) ;
+ROW ROW_0 unithd 5520 10880 N DO 29 BY 1 STEP 460 0 ;
+ROW ROW_1 unithd 5520 13600 FS DO 29 BY 1 STEP 460 0 ;
+ROW ROW_2 unithd 5520 16320 N DO 29 BY 1 STEP 460 0 ;
+ROW ROW_3 unithd 5520 19040 FS DO 29 BY 1 STEP 460 0 ;
+ROW ROW_4 unithd 5520 21760 N DO 29 BY 1 STEP 460 0 ;
+TRACKS X 230 DO 54 STEP 460 LAYER li1 ;
+TRACKS Y 170 DO 104 STEP 340 LAYER li1 ;
+TRACKS X 170 DO 73 STEP 340 LAYER met1 ;
+TRACKS Y 170 DO 104 STEP 340 LAYER met1 ;
+TRACKS X 230 DO 54 STEP 460 LAYER met2 ;
+TRACKS Y 230 DO 77 STEP 460 LAYER met2 ;
+TRACKS X 340 DO 36 STEP 680 LAYER met3 ;
+TRACKS Y 340 DO 52 STEP 680 LAYER met3 ;
+TRACKS X 460 DO 27 STEP 920 LAYER met4 ;
+TRACKS Y 460 DO 38 STEP 920 LAYER met4 ;
+TRACKS X 1700 DO 7 STEP 3400 LAYER met5 ;
+TRACKS Y 1700 DO 10 STEP 3400 LAYER met5 ;
+COMPONENTS 18 ;
+    - PHY_EDGE_ROW_0_Left_5 sky130_fd_sc_hd__decap_3 + SOURCE DIST + FIXED ( 5520 10880 ) N ;
+    - PHY_EDGE_ROW_0_Right_0 sky130_fd_sc_hd__decap_3 + SOURCE DIST + FIXED ( 17480 10880 ) FN ;
+    - PHY_EDGE_ROW_1_Left_6 sky130_fd_sc_hd__decap_3 + SOURCE DIST + FIXED ( 5520 13600 ) FS ;
+    - PHY_EDGE_ROW_1_Right_1 sky130_fd_sc_hd__decap_3 + SOURCE DIST + FIXED ( 17480 13600 ) S ;
+    - PHY_EDGE_ROW_2_Left_7 sky130_fd_sc_hd__decap_3 + SOURCE DIST + FIXED ( 5520 16320 ) N ;
+    - PHY_EDGE_ROW_2_Right_2 sky130_fd_sc_hd__decap_3 + SOURCE DIST + FIXED ( 17480 16320 ) FN ;
+    - PHY_EDGE_ROW_3_Left_8 sky130_fd_sc_hd__decap_3 + SOURCE DIST + FIXED ( 5520 19040 ) FS ;
+    - PHY_EDGE_ROW_3_Right_3 sky130_fd_sc_hd__decap_3 + SOURCE DIST + FIXED ( 17480 19040 ) S ;
+    - PHY_EDGE_ROW_4_Left_9 sky130_fd_sc_hd__decap_3 + SOURCE DIST + FIXED ( 5520 21760 ) N ;
+    - PHY_EDGE_ROW_4_Right_4 sky130_fd_sc_hd__decap_3 + SOURCE DIST + FIXED ( 17480 21760 ) FN ;
+    - _0_ sky130_fd_sc_hd__xor2_2 ;
+    - _1_ sky130_fd_sc_hd__and2_2 ;
+    - _2_ sky130_fd_sc_hd__xor2_2 ;
+    - _3_ sky130_fd_sc_hd__and2_2 ;
+    - _4_ sky130_fd_sc_hd__xor2_2 ;
+    - _5_ sky130_fd_sc_hd__and2_2 ;
+    - _6_ sky130_fd_sc_hd__xor2_2 ;
+    - _7_ sky130_fd_sc_hd__and2_2 ;
+END COMPONENTS
+PINS 16 ;
+    - Cout[0] + NET Cout[0] + DIRECTION OUTPUT + USE SIGNAL ;
+    - Cout[1] + NET Cout[1] + DIRECTION OUTPUT + USE SIGNAL ;
+    - Cout[2] + NET Cout[2] + DIRECTION OUTPUT + USE SIGNAL ;
+    - Cout[3] + NET Cout[3] + DIRECTION OUTPUT + USE SIGNAL ;
+    - a[0] + NET a[0] + DIRECTION INPUT + USE SIGNAL ;
+    - a[1] + NET a[1] + DIRECTION INPUT + USE SIGNAL ;
+    - a[2] + NET a[2] + DIRECTION INPUT + USE SIGNAL ;
+    - a[3] + NET a[3] + DIRECTION INPUT + USE SIGNAL ;
+    - b[0] + NET b[0] + DIRECTION INPUT + USE SIGNAL ;
+    - b[1] + NET b[1] + DIRECTION INPUT + USE SIGNAL ;
+    - b[2] + NET b[2] + DIRECTION INPUT + USE SIGNAL ;
+    - b[3] + NET b[3] + DIRECTION INPUT + USE SIGNAL ;
+    - sum[0] + NET sum[0] + DIRECTION OUTPUT + USE SIGNAL ;
+    - sum[1] + NET sum[1] + DIRECTION OUTPUT + USE SIGNAL ;
+    - sum[2] + NET sum[2] + DIRECTION OUTPUT + USE SIGNAL ;
+    - sum[3] + NET sum[3] + DIRECTION OUTPUT + USE SIGNAL ;
+END PINS
+SPECIALNETS 2 ;
+    - VGND ( PHY_EDGE_ROW_4_Left_9 VNB ) ( PHY_EDGE_ROW_3_Left_8 VNB ) ( PHY_EDGE_ROW_2_Left_7 VNB ) ( PHY_EDGE_ROW_1_Left_6 VNB ) ( PHY_EDGE_ROW_0_Left_5 VNB ) ( PHY_EDGE_ROW_4_Right_4 VNB ) ( PHY_EDGE_ROW_3_Right_3 VNB )
+      ( PHY_EDGE_ROW_2_Right_2 VNB ) ( PHY_EDGE_ROW_1_Right_1 VNB ) ( PHY_EDGE_ROW_0_Right_0 VNB ) ( PHY_EDGE_ROW_4_Left_9 VGND ) ( PHY_EDGE_ROW_3_Left_8 VGND ) ( PHY_EDGE_ROW_2_Left_7 VGND ) ( PHY_EDGE_ROW_1_Left_6 VGND ) ( PHY_EDGE_ROW_0_Left_5 VGND )
+      ( PHY_EDGE_ROW_4_Right_4 VGND ) ( PHY_EDGE_ROW_3_Right_3 VGND ) ( PHY_EDGE_ROW_2_Right_2 VGND ) ( PHY_EDGE_ROW_1_Right_1 VGND ) ( PHY_EDGE_ROW_0_Right_0 VGND ) ( _7_ VNB ) ( _6_ VNB ) ( _5_ VNB )
+      ( _4_ VNB ) ( _3_ VNB ) ( _2_ VNB ) ( _1_ VNB ) ( _0_ VNB ) ( _7_ VGND ) ( _6_ VGND ) ( _5_ VGND )
+      ( _4_ VGND ) ( _3_ VGND ) ( _2_ VGND ) ( _1_ VGND ) ( _0_ VGND ) + USE GROUND ;
+    - VPWR ( PHY_EDGE_ROW_4_Left_9 VPB ) ( PHY_EDGE_ROW_3_Left_8 VPB ) ( PHY_EDGE_ROW_2_Left_7 VPB ) ( PHY_EDGE_ROW_1_Left_6 VPB ) ( PHY_EDGE_ROW_0_Left_5 VPB ) ( PHY_EDGE_ROW_4_Right_4 VPB ) ( PHY_EDGE_ROW_3_Right_3 VPB )
+      ( PHY_EDGE_ROW_2_Right_2 VPB ) ( PHY_EDGE_ROW_1_Right_1 VPB ) ( PHY_EDGE_ROW_0_Right_0 VPB ) ( PHY_EDGE_ROW_4_Left_9 VPWR ) ( PHY_EDGE_ROW_3_Left_8 VPWR ) ( PHY_EDGE_ROW_2_Left_7 VPWR ) ( PHY_EDGE_ROW_1_Left_6 VPWR ) ( PHY_EDGE_ROW_0_Left_5 VPWR )
+      ( PHY_EDGE_ROW_4_Right_4 VPWR ) ( PHY_EDGE_ROW_3_Right_3 VPWR ) ( PHY_EDGE_ROW_2_Right_2 VPWR ) ( PHY_EDGE_ROW_1_Right_1 VPWR ) ( PHY_EDGE_ROW_0_Right_0 VPWR ) ( _7_ VPB ) ( _6_ VPB ) ( _5_ VPB )
+      ( _4_ VPB ) ( _3_ VPB ) ( _2_ VPB ) ( _1_ VPB ) ( _0_ VPB ) ( _7_ VPWR ) ( _6_ VPWR ) ( _5_ VPWR )
+      ( _4_ VPWR ) ( _3_ VPWR ) ( _2_ VPWR ) ( _1_ VPWR ) ( _0_ VPWR ) + USE POWER ;
+END SPECIALNETS
+NETS 16 ;
+    - Cout[0] ( PIN Cout[0] ) ( _7_ X ) + USE SIGNAL ;
+    - Cout[1] ( PIN Cout[1] ) ( _1_ X ) + USE SIGNAL ;
+    - Cout[2] ( PIN Cout[2] ) ( _3_ X ) + USE SIGNAL ;
+    - Cout[3] ( PIN Cout[3] ) ( _5_ X ) + USE SIGNAL ;
+    - a[0] ( PIN a[0] ) ( _7_ B ) ( _0_ B ) + USE SIGNAL ;
+    - a[1] ( PIN a[1] ) ( _2_ B ) ( _1_ B ) + USE SIGNAL ;
+    - a[2] ( PIN a[2] ) ( _4_ B ) ( _3_ B ) + USE SIGNAL ;
+    - a[3] ( PIN a[3] ) ( _6_ B ) ( _5_ B ) + USE SIGNAL ;
+    - b[0] ( PIN b[0] ) ( _7_ A ) ( _0_ A ) + USE SIGNAL ;
+    - b[1] ( PIN b[1] ) ( _2_ A ) ( _1_ A ) + USE SIGNAL ;
+    - b[2] ( PIN b[2] ) ( _4_ A ) ( _3_ A ) + USE SIGNAL ;
+    - b[3] ( PIN b[3] ) ( _6_ A ) ( _5_ A ) + USE SIGNAL ;
+    - sum[0] ( PIN sum[0] ) ( _0_ X ) + USE SIGNAL ;
+    - sum[1] ( PIN sum[1] ) ( _2_ X ) + USE SIGNAL ;
+    - sum[2] ( PIN sum[2] ) ( _4_ X ) + USE SIGNAL ;
+    - sum[3] ( PIN sum[3] ) ( _6_ X ) + USE SIGNAL ;
+END NETS
+END DESIGN

@@ -1,0 +1,109 @@
+{
+  "creator": "Yosys 0.38 (git sha1 543faed9c8c, clang++ 17.0.6 -fPIC -Os)",
+  "modules": {
+    "adder": {
+      "attributes": {
+        "top": "00000000000000000000000000000001",
+        "src": "/mnt/d/Codes/Github/RTL-to-GDSII-FLow/adder.v:1.1-9.10"
+      },
+      "ports": {
+        "a": {
+          "direction": "input",
+          "bits": [ 2, 3, 4, 5 ]
+        },
+        "b": {
+          "direction": "input",
+          "bits": [ 6, 7, 8, 9 ]
+        },
+        "sum": {
+          "direction": "output",
+          "bits": [ 10, 11, 12, 13 ]
+        },
+        "Cout": {
+          "direction": "output",
+          "bits": [ 14, 15, 16, 17 ]
+        }
+      },
+      "cells": {
+        "$and$/mnt/d/Codes/Github/RTL-to-GDSII-FLow/adder.v:7$2": {
+          "hide_name": 1,
+          "type": "$and",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000100",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000100",
+            "Y_WIDTH": "00000000000000000000000000000100"
+          },
+          "attributes": {
+            "src": "/mnt/d/Codes/Github/RTL-to-GDSII-FLow/adder.v:7.14-7.17"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 2, 3, 4, 5 ],
+            "B": [ 6, 7, 8, 9 ],
+            "Y": [ 14, 15, 16, 17 ]
+          }
+        },
+        "$xor$/mnt/d/Codes/Github/RTL-to-GDSII-FLow/adder.v:6$1": {
+          "hide_name": 1,
+          "type": "$xor",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000100",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000100",
+            "Y_WIDTH": "00000000000000000000000000000100"
+          },
+          "attributes": {
+            "src": "/mnt/d/Codes/Github/RTL-to-GDSII-FLow/adder.v:6.13-6.16"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 2, 3, 4, 5 ],
+            "B": [ 6, 7, 8, 9 ],
+            "Y": [ 10, 11, 12, 13 ]
+          }
+        }
+      },
+      "netnames": {
+        "Cout": {
+          "hide_name": 0,
+          "bits": [ 14, 15, 16, 17 ],
+          "attributes": {
+            "src": "/mnt/d/Codes/Github/RTL-to-GDSII-FLow/adder.v:4.17-4.21"
+          }
+        },
+        "a": {
+          "hide_name": 0,
+          "bits": [ 2, 3, 4, 5 ],
+          "attributes": {
+            "src": "/mnt/d/Codes/Github/RTL-to-GDSII-FLow/adder.v:3.12-3.13"
+          }
+        },
+        "b": {
+          "hide_name": 0,
+          "bits": [ 6, 7, 8, 9 ],
+          "attributes": {
+            "src": "/mnt/d/Codes/Github/RTL-to-GDSII-FLow/adder.v:3.14-3.15"
+          }
+        },
+        "sum": {
+          "hide_name": 0,
+          "bits": [ 10, 11, 12, 13 ],
+          "attributes": {
+            "src": "/mnt/d/Codes/Github/RTL-to-GDSII-FLow/adder.v:4.13-4.16"
+          }
+        }
+      }
+    }
+  }
+}

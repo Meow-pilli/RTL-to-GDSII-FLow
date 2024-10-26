@@ -1,0 +1,5 @@
+`verilator_config
+lint_off -rule DECLFILENAME
+lint_off -rule EOFNEWLINE
+lint_off -rule UNDRIVEN -file "/mnt/d/Codes/Github/RTL-to-GDSII-FLow/runs/RUN_2024-10-26_03-16-15/tmp/f9eaa69d503842c991464f6be232b5a6.bb.v"
+lint_off -rule UNUSEDSIGNAL -file "/mnt/d/Codes/Github/RTL-to-GDSII-FLow/runs/RUN_2024-10-26_03-16-15/tmp/f9eaa69d503842c991464f6be232b5a6.bb.v"

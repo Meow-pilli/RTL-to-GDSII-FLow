@@ -1,0 +1,1 @@
+openroad -exit -no_splash -metrics /mnt/d/Codes/Github/RTL-to-GDSII-FLow/runs/RUN_2024-10-26_03-16-15/13-openroad-floorplan/or_metrics_out.json /nix/store/x1b52zn3rc738cv5d5r274v3dsyg5mcf-python3-3.11.9-env/lib/python3.11/site-packages/openlane/scripts/openroad/floorplan.tcl

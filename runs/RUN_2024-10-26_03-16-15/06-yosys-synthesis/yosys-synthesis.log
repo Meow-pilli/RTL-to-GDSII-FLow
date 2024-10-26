@@ -1,0 +1,844 @@
+
+ /----------------------------------------------------------------------------\
+ |                                                                            |
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |                                                                            |
+ |  Copyright (C) 2012 - 2020  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |                                                                            |
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+ |  purpose with or without fee is hereby granted, provided that the above    |
+ |  copyright notice and this permission notice appear in all copies.         |
+ |                                                                            |
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+ |                                                                            |
+ \----------------------------------------------------------------------------/
+
+ Yosys 0.38 (git sha1 543faed9c8c, clang++ 17.0.6 -fPIC -Os)
+
+Loaded SDC plugin
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+
+1. Executing Liberty frontend: /root/.volare/volare/sky130/versions/bdc9412b3e468c102d01b7cf6337be06ec6e9c9a/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+Imported 428 cell types from liberty file.
+
+2. Executing Verilog-2005 frontend: /mnt/d/Codes/Github/RTL-to-GDSII-FLow/adder.v
+Parsing SystemVerilog input from `/mnt/d/Codes/Github/RTL-to-GDSII-FLow/adder.v' to AST representation.
+Generating RTLIL representation for module `\adder'.
+Successfully finished Verilog frontend.
+
+3. Executing HIERARCHY pass (managing design hierarchy).
+
+3.1. Analyzing design hierarchy..
+Top module:  \adder
+
+3.2. Analyzing design hierarchy..
+Top module:  \adder
+Removed 0 unused modules.
+Renaming module adder to adder.
+
+4. Generating Graphviz representation of design.
+Writing dot description to `/mnt/d/Codes/Github/RTL-to-GDSII-FLow/runs/RUN_2024-10-26_03-16-15/06-yosys-synthesis/hierarchy.dot'.
+Dumping module adder to page 1.
+
+5. Executing TRIBUF pass.
+
+6. Executing HIERARCHY pass (managing design hierarchy).
+
+6.1. Analyzing design hierarchy..
+Top module:  \adder
+
+6.2. Analyzing design hierarchy..
+Top module:  \adder
+Removed 0 unused modules.
+
+7. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+8. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+9. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 0 assignments to connections.
+
+10. Executing PROC_INIT pass (extract init attributes).
+
+11. Executing PROC_ARST pass (detect async resets in processes).
+
+12. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+
+13. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+14. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+15. Executing PROC_DFF pass (convert process syncs to FFs).
+
+16. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+17. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+18. Executing CHECK pass (checking for obvious problems).
+Checking module adder...
+Found and reported 0 problems.
+
+19. Executing OPT_EXPR pass (perform const folding).
+Optimizing module adder.
+
+20. Executing FLATTEN pass (flatten design).
+
+21. Executing OPT_EXPR pass (perform const folding).
+Optimizing module adder.
+
+22. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \adder..
+Removed 0 unused cells and 2 unused wires.
+<suppressed ~1 debug messages>
+
+23. Executing OPT pass (performing simple optimizations).
+
+23.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module adder.
+
+23.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\adder'.
+Removed a total of 0 cells.
+
+23.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \adder..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+23.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \adder.
+Performed a total of 0 changes.
+
+23.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\adder'.
+Removed a total of 0 cells.
+
+23.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+23.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \adder..
+
+23.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module adder.
+
+23.9. Finished OPT passes. (There is nothing left to do.)
+
+24. Executing FSM pass (extract and optimize FSM).
+
+24.1. Executing FSM_DETECT pass (finding FSMs in design).
+
+24.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+
+24.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+24.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \adder..
+
+24.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+24.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+
+24.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+24.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+
+25. Executing OPT pass (performing simple optimizations).
+
+25.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module adder.
+
+25.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\adder'.
+Removed a total of 0 cells.
+
+25.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \adder..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+25.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \adder.
+Performed a total of 0 changes.
+
+25.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\adder'.
+Removed a total of 0 cells.
+
+25.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+25.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \adder..
+
+25.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module adder.
+
+25.9. Finished OPT passes. (There is nothing left to do.)
+
+26. Executing WREDUCE pass (reducing word size of cells).
+
+27. Executing PEEPOPT pass (run peephole optimizers).
+
+28. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \adder..
+
+29. Executing ALUMACC pass (create $alu and $macc cells).
+Extracting $alu and $macc cells in module adder:
+  created 0 $alu and 0 $macc cells.
+
+30. Executing SHARE pass (SAT-based resource sharing).
+
+31. Executing OPT pass (performing simple optimizations).
+
+31.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module adder.
+
+31.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\adder'.
+Removed a total of 0 cells.
+
+31.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \adder..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+31.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \adder.
+Performed a total of 0 changes.
+
+31.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\adder'.
+Removed a total of 0 cells.
+
+31.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+31.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \adder..
+
+31.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module adder.
+
+31.9. Finished OPT passes. (There is nothing left to do.)
+
+32. Executing MEMORY pass.
+
+32.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+32.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+32.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+32.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+32.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+32.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \adder..
+
+32.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+32.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+32.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \adder..
+
+32.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+33. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \adder..
+
+34. Executing OPT pass (performing simple optimizations).
+
+34.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module adder.
+
+34.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\adder'.
+Removed a total of 0 cells.
+
+34.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+34.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \adder..
+
+34.5. Finished fast OPT passes.
+
+35. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+36. Executing OPT pass (performing simple optimizations).
+
+36.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module adder.
+
+36.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\adder'.
+Removed a total of 0 cells.
+
+36.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \adder..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+36.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \adder.
+Performed a total of 0 changes.
+
+36.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\adder'.
+Removed a total of 0 cells.
+
+36.6. Executing OPT_SHARE pass.
+
+36.7. Executing OPT_DFF pass (perform DFF optimizations).
+
+36.8. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \adder..
+
+36.9. Executing OPT_EXPR pass (perform const folding).
+Optimizing module adder.
+
+36.10. Finished OPT passes. (There is nothing left to do.)
+
+37. Executing TECHMAP pass (map to technology primitives).
+
+37.1. Executing Verilog-2005 frontend: /nix/store/sx2v0i73mn1ih2z1nk61pm9n5gjgpidy-yosys/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/nix/store/sx2v0i73mn1ih2z1nk61pm9n5gjgpidy-yosys/bin/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `\$__div_mod_u'.
+Generating RTLIL representation for module `\$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `\$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_pmux'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Successfully finished Verilog frontend.
+
+37.2. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $xor.
+Using extmapper simplemap for cells of type $and.
+No more expansions possible.
+<suppressed ~75 debug messages>
+
+38. Executing OPT pass (performing simple optimizations).
+
+38.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module adder.
+
+38.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\adder'.
+Removed a total of 0 cells.
+
+38.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+38.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \adder..
+
+38.5. Finished fast OPT passes.
+
+39. Executing ABC pass (technology mapping using ABC).
+
+39.1. Extracting gate netlist of module `\adder' to `<abc-temp-dir>/input.blif'..
+Extracted 8 gates and 16 wires to a netlist network with 8 inputs and 8 outputs.
+
+39.1.1. Executing ABC.
+Running ABC command: "/nix/store/wq2q0njg3sx8wvj2akz7x1qxwyrv9xlr-yosys-abc/bin/abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+39.1.2. Re-integrating ABC results.
+ABC RESULTS:               XOR cells:        4
+ABC RESULTS:               AND cells:        4
+ABC RESULTS:        internal signals:        0
+ABC RESULTS:           input signals:        8
+ABC RESULTS:          output signals:        8
+Removing temp directory.
+
+40. Executing OPT pass (performing simple optimizations).
+
+40.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module adder.
+
+40.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\adder'.
+Removed a total of 0 cells.
+
+40.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+40.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \adder..
+Removed 0 unused cells and 16 unused wires.
+<suppressed ~1 debug messages>
+
+40.5. Finished fast OPT passes.
+
+41. Executing HIERARCHY pass (managing design hierarchy).
+
+41.1. Analyzing design hierarchy..
+Top module:  \adder
+
+41.2. Analyzing design hierarchy..
+Top module:  \adder
+Removed 0 unused modules.
+
+42. Printing statistics.
+
+=== adder ===
+
+   Number of wires:                  4
+   Number of wire bits:             16
+   Number of public wires:           4
+   Number of public wire bits:      16
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  8
+     $_AND_                          4
+     $_XOR_                          4
+
+43. Executing CHECK pass (checking for obvious problems).
+Checking module adder...
+Found and reported 0 problems.
+
+44. Generating Graphviz representation of design.
+Writing dot description to `/mnt/d/Codes/Github/RTL-to-GDSII-FLow/runs/RUN_2024-10-26_03-16-15/06-yosys-synthesis/primitive_techmap.dot'.
+Dumping module adder to page 1.
+
+45. Executing OPT pass (performing simple optimizations).
+
+45.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module adder.
+
+45.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\adder'.
+Removed a total of 0 cells.
+
+45.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \adder..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+45.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \adder.
+Performed a total of 0 changes.
+
+45.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\adder'.
+Removed a total of 0 cells.
+
+45.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+45.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \adder..
+
+45.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module adder.
+
+45.9. Finished OPT passes. (There is nothing left to do.)
+
+46. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \adder..
+{
+   "creator": "Yosys 0.38 (git sha1 543faed9c8c, clang++ 17.0.6 -fPIC -Os)",
+   "invocation": "stat -json -liberty /mnt/d/Codes/Github/RTL-to-GDSII-FLow/runs/RUN_2024-10-26_03-16-15/tmp/146e71331ef646e9bb3fe5b07eb808b6.lib ",
+   "modules": {
+      "\\adder": {
+         "num_wires":         4,
+         "num_wire_bits":     16,
+         "num_pub_wires":     4,
+         "num_pub_wire_bits": 16,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         8,
+         "num_cells_by_type": {
+            "$_AND_": 4,
+            "$_XOR_": 4
+         }
+      }
+   },
+      "design": {
+         "num_wires":         4,
+         "num_wire_bits":     16,
+         "num_pub_wires":     4,
+         "num_pub_wire_bits": 16,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         8,
+         "num_cells_by_type": {
+            "$_AND_": 4,
+            "$_XOR_": 4
+         }
+      }
+}
+
+47. Printing statistics.
+
+=== adder ===
+
+   Number of wires:                  4
+   Number of wire bits:             16
+   Number of public wires:           4
+   Number of public wire bits:      16
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  8
+     $_AND_                          4
+     $_XOR_                          4
+
+   Area for cell type $_AND_ is unknown!
+   Area for cell type $_XOR_ is unknown!
+
+mapping tbuf
+[INFO] Applying tri-state buffer mapping from '/root/.volare/volare/sky130/versions/bdc9412b3e468c102d01b7cf6337be06ec6e9c9a/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tribuff_map.v'...
+
+48. Executing TECHMAP pass (map to technology primitives).
+
+48.1. Executing Verilog-2005 frontend: /root/.volare/volare/sky130/versions/bdc9412b3e468c102d01b7cf6337be06ec6e9c9a/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tribuff_map.v
+Parsing Verilog input from `/root/.volare/volare/sky130/versions/bdc9412b3e468c102d01b7cf6337be06ec6e9c9a/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tribuff_map.v' to AST representation.
+Generating RTLIL representation for module `\$_TBUF_'.
+Successfully finished Verilog frontend.
+
+48.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~3 debug messages>
+
+49. Executing SIMPLEMAP pass (map simple cells to gate primitives).
+[INFO] Applying latch mapping from '/root/.volare/volare/sky130/versions/bdc9412b3e468c102d01b7cf6337be06ec6e9c9a/sky130A/libs.tech/openlane/sky130_fd_sc_hd/latch_map.v'...
+
+50. Executing TECHMAP pass (map to technology primitives).
+
+50.1. Executing Verilog-2005 frontend: /root/.volare/volare/sky130/versions/bdc9412b3e468c102d01b7cf6337be06ec6e9c9a/sky130A/libs.tech/openlane/sky130_fd_sc_hd/latch_map.v
+Parsing Verilog input from `/root/.volare/volare/sky130/versions/bdc9412b3e468c102d01b7cf6337be06ec6e9c9a/sky130A/libs.tech/openlane/sky130_fd_sc_hd/latch_map.v' to AST representation.
+Generating RTLIL representation for module `\$_DLATCH_P_'.
+Generating RTLIL representation for module `\$_DLATCH_N_'.
+Successfully finished Verilog frontend.
+
+50.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~4 debug messages>
+
+51. Executing SIMPLEMAP pass (map simple cells to gate primitives).
+
+52. Executing DFFLIBMAP pass (mapping DFF cells to sequential cells from liberty file).
+  cell sky130_fd_sc_hd__dfxtp_2 (noninv, pins=3, area=21.27) is a direct match for cell type $_DFF_P_.
+  cell sky130_fd_sc_hd__dfrtp_2 (noninv, pins=4, area=26.28) is a direct match for cell type $_DFF_PN0_.
+  cell sky130_fd_sc_hd__dfstp_2 (noninv, pins=4, area=26.28) is a direct match for cell type $_DFF_PN1_.
+  cell sky130_fd_sc_hd__dfbbn_2 (noninv, pins=6, area=35.03) is a direct match for cell type $_DFFSR_NNN_.
+  final dff cell mappings:
+    unmapped dff cell: $_DFF_N_
+    \sky130_fd_sc_hd__dfxtp_2 _DFF_P_ (.CLK( C), .D( D), .Q( Q));
+    unmapped dff cell: $_DFF_NN0_
+    unmapped dff cell: $_DFF_NN1_
+    unmapped dff cell: $_DFF_NP0_
+    unmapped dff cell: $_DFF_NP1_
+    \sky130_fd_sc_hd__dfrtp_2 _DFF_PN0_ (.CLK( C), .D( D), .Q( Q), .RESET_B( R));
+    \sky130_fd_sc_hd__dfstp_2 _DFF_PN1_ (.CLK( C), .D( D), .Q( Q), .SET_B( R));
+    unmapped dff cell: $_DFF_PP0_
+    unmapped dff cell: $_DFF_PP1_
+    \sky130_fd_sc_hd__dfbbn_2 _DFFSR_NNN_ (.CLK_N( C), .D( D), .Q( Q), .Q_N(~Q), .RESET_B( R), .SET_B( S));
+    unmapped dff cell: $_DFFSR_NNP_
+    unmapped dff cell: $_DFFSR_NPN_
+    unmapped dff cell: $_DFFSR_NPP_
+    unmapped dff cell: $_DFFSR_PNN_
+    unmapped dff cell: $_DFFSR_PNP_
+    unmapped dff cell: $_DFFSR_PPN_
+    unmapped dff cell: $_DFFSR_PPP_
+
+52.1. Executing DFFLEGALIZE pass (convert FFs to types supported by the target).
+Mapping DFF cells in module `\adder':
+{
+   "creator": "Yosys 0.38 (git sha1 543faed9c8c, clang++ 17.0.6 -fPIC -Os)",
+   "invocation": "stat -json -liberty /mnt/d/Codes/Github/RTL-to-GDSII-FLow/runs/RUN_2024-10-26_03-16-15/tmp/146e71331ef646e9bb3fe5b07eb808b6.lib ",
+   "modules": {
+      "\\adder": {
+         "num_wires":         4,
+         "num_wire_bits":     16,
+         "num_pub_wires":     4,
+         "num_pub_wire_bits": 16,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         8,
+         "num_cells_by_type": {
+            "$_AND_": 4,
+            "$_XOR_": 4
+         }
+      }
+   },
+      "design": {
+         "num_wires":         4,
+         "num_wire_bits":     16,
+         "num_pub_wires":     4,
+         "num_pub_wire_bits": 16,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         8,
+         "num_cells_by_type": {
+            "$_AND_": 4,
+            "$_XOR_": 4
+         }
+      }
+}
+
+53. Printing statistics.
+
+=== adder ===
+
+   Number of wires:                  4
+   Number of wire bits:             16
+   Number of public wires:           4
+   Number of public wire bits:      16
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  8
+     $_AND_                          4
+     $_XOR_                          4
+
+   Area for cell type $_AND_ is unknown!
+   Area for cell type $_XOR_ is unknown!
+
+[INFO] Using strategy "AREA 0"...
+
+54. Executing ABC pass (technology mapping using ABC).
+
+54.1. Extracting gate netlist of module `\adder' to `/tmp/yosys-abc-aZhzio/input.blif'..
+Extracted 8 gates and 16 wires to a netlist network with 8 inputs and 8 outputs.
+
+54.1.1. Executing ABC.
+Running ABC command: "/nix/store/wq2q0njg3sx8wvj2akz7x1qxwyrv9xlr-yosys-abc/bin/abc" -s -f /tmp/yosys-abc-aZhzio/abc.script 2>&1
+ABC: ABC command line: "source /tmp/yosys-abc-aZhzio/abc.script".
+ABC: 
+ABC: + read_blif /tmp/yosys-abc-aZhzio/input.blif 
+ABC: + read_lib -w /mnt/d/Codes/Github/RTL-to-GDSII-FLow/runs/RUN_2024-10-26_03-16-15/tmp/146e71331ef646e9bb3fe5b07eb808b6.lib 
+ABC: Parsing finished successfully.  Parsing time =     0.15 sec
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfbbn_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfrbp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfrtp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfrtp_4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfsbp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfstp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfstp_4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfxbp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfxtp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfxtp_4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dlxtn_1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dlxtn_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dlxtn_4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dlxtp_1".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "sky130_fd_sc_hd__ebufn_2".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "sky130_fd_sc_hd__ebufn_4".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "sky130_fd_sc_hd__ebufn_8".
+ABC: Library "sky130_fd_sc_hd__tt_025C_1v80" from "/mnt/d/Codes/Github/RTL-to-GDSII-FLow/runs/RUN_2024-10-26_03-16-15/tmp/146e71331ef646e9bb3fe5b07eb808b6.lib" has 175 cells (17 skipped: 14 seq; 3 tri-state; 0 no func; 0 dont_use).  Time =     0.19 sec
+ABC: Memory =    9.54 MB. Time =     0.19 sec
+ABC: Warning: Detected 2 multi-output gates (for example, "sky130_fd_sc_hd__fa_1").
+ABC: + read_constr -v /mnt/d/Codes/Github/RTL-to-GDSII-FLow/runs/RUN_2024-10-26_03-16-15/06-yosys-synthesis/synthesis.sdc 
+ABC: Setting driving cell to be "sky130_fd_sc_hd__inv_2/Y".
+ABC: Setting output load to be 33.442001.
+ABC: + read_constr /mnt/d/Codes/Github/RTL-to-GDSII-FLow/runs/RUN_2024-10-26_03-16-15/06-yosys-synthesis/synthesis.sdc 
+ABC: + fx 
+ABC: + mfs 
+ABC: + strash 
+ABC: + drf -l 
+ABC: + balance 
+ABC: + drw -l 
+ABC: + drf -l 
+ABC: + balance 
+ABC: + drw -l 
+ABC: + drw -l -z 
+ABC: + balance 
+ABC: + drf -l -z 
+ABC: + drw -l -z 
+ABC: + balance 
+ABC: + retime -D -D 25000 -M 5 
+ABC: + scleanup 
+ABC: Error: The network is combinational.
+ABC: + fraig_store 
+ABC: + balance 
+ABC: + fraig_store 
+ABC: + balance 
+ABC: + drw -l 
+ABC: + drf -l 
+ABC: + balance 
+ABC: + drw -l 
+ABC: + drw -l -z 
+ABC: + balance 
+ABC: + drf -l -z 
+ABC: + drw -l -z 
+ABC: + balance 
+ABC: + fraig_store 
+ABC: + balance 
+ABC: + drw -l 
+ABC: + drf -l 
+ABC: + balance 
+ABC: + drw -l 
+ABC: + drw -l -z 
+ABC: + balance 
+ABC: + drf -l -z 
+ABC: + drw -l -z 
+ABC: + balance 
+ABC: + fraig_store 
+ABC: + balance 
+ABC: + drw -l 
+ABC: + drf -l 
+ABC: + balance 
+ABC: + drw -l 
+ABC: + drw -l -z 
+ABC: + balance 
+ABC: + drf -l -z 
+ABC: + drw -l -z 
+ABC: + balance 
+ABC: + fraig_store 
+ABC: + fraig_restore 
+ABC: + amap -m -Q 0.1 -F 20 -A 20 -C 5000 
+ABC: + retime -D -D 25000 
+ABC: + &get -n 
+ABC: + &st 
+ABC: + &dch 
+ABC: + &nf 
+ABC: + &put 
+ABC: + 
+ABC: + stime -p 
+ABC: Cannot find the default PI driving cell (sky130_fd_sc_hd__inv_2/Y) in the library.
+ABC: WireLoad = "none"  Gates =      8 (  0.0 %)   Cap = 21.7 ff (  0.0 %)   Area =       95.09 (100.0 %)   Delay =   361.60 ps  ( 50.0 %)               
+ABC: Path  0 --       1 : 0    2 pi                      A =   0.00  Df =   0.0   -0.0 ps  S =   0.0 ps  Cin =  0.0 ff  Cout =  10.9 ff  Cmax =   0.0 ff  G =    0  
+ABC: Path  1 --      18 : 2    1 sky130_fd_sc_hd__xor2_2 A =  16.27  Df = 361.6 -142.7 ps  S = 429.7 ps  Cin =  8.6 ff  Cout =  33.4 ff  Cmax = 130.0 ff  G =  390  
+ABC: Start-point = pi0 (\b [0]).  End-point = po0 (\sum [0]).
+ABC: + print_stats -m 
+ABC: netlist                       : i/o =    8/    8  lat =    0  nd =     8  edge =     16  area =95.12  delay = 1.00  lev = 1
+ABC: + write_blif /tmp/yosys-abc-aZhzio/output.blif 
+
+54.1.2. Re-integrating ABC results.
+ABC RESULTS:   sky130_fd_sc_hd__and2_2 cells:        4
+ABC RESULTS:   sky130_fd_sc_hd__xor2_2 cells:        4
+ABC RESULTS:        internal signals:        0
+ABC RESULTS:           input signals:        8
+ABC RESULTS:          output signals:        8
+Removing temp directory.
+
+55. Executing SETUNDEF pass (replace undef values with defined constants).
+
+56. Executing HILOMAP pass (mapping to constant drivers).
+
+57. Executing SPLITNETS pass (splitting up multi-bit signals).
+
+58. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \adder..
+Removed 0 unused cells and 16 unused wires.
+<suppressed ~1 debug messages>
+
+59. Executing INSBUF pass (insert buffer cells for connected wires).
+
+60. Executing CHECK pass (checking for obvious problems).
+Checking module adder...
+Found and reported 0 problems.
+{
+   "creator": "Yosys 0.38 (git sha1 543faed9c8c, clang++ 17.0.6 -fPIC -Os)",
+   "invocation": "stat -json -liberty /mnt/d/Codes/Github/RTL-to-GDSII-FLow/runs/RUN_2024-10-26_03-16-15/tmp/146e71331ef646e9bb3fe5b07eb808b6.lib ",
+   "modules": {
+      "\\adder": {
+         "num_wires":         4,
+         "num_wire_bits":     16,
+         "num_pub_wires":     4,
+         "num_pub_wire_bits": 16,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         8,
+         "area":              95.091200,
+         "num_cells_by_type": {
+            "sky130_fd_sc_hd__and2_2": 4,
+            "sky130_fd_sc_hd__xor2_2": 4
+         }
+      }
+   },
+      "design": {
+         "num_wires":         4,
+         "num_wire_bits":     16,
+         "num_pub_wires":     4,
+         "num_pub_wire_bits": 16,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         8,
+         "area":              95.091200,
+         "num_cells_by_type": {
+            "sky130_fd_sc_hd__and2_2": 4,
+            "sky130_fd_sc_hd__xor2_2": 4
+         }
+      }
+}
+
+61. Printing statistics.
+
+=== adder ===
+
+   Number of wires:                  4
+   Number of wire bits:             16
+   Number of public wires:           4
+   Number of public wire bits:      16
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  8
+     sky130_fd_sc_hd__and2_2         4
+     sky130_fd_sc_hd__xor2_2         4
+
+   Chip area for module '\adder': 95.091200
+
+62. Executing Verilog backend.
+Dumping module `\adder'.
+
+63. Executing JSON backend.
+
+End of script. Logfile hash: 4a2ca1cf54, CPU: user 1.44s system 0.08s, MEM: 54.51 MB peak
+Yosys 0.38 (git sha1 543faed9c8c, clang++ 17.0.6 -fPIC -Os)
+Time spent: 46% 7x stat (0 sec), 16% 2x abc (0 sec), ...
