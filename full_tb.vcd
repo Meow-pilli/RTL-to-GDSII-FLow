@@ -1,0 +1,60 @@
+$date
+	Sat Oct 26 02:51:22 2024
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module adder_tb $end
+$var wire 4 ! sum [3:0] $end
+$var wire 4 " Cout [3:0] $end
+$var reg 4 # a [3:0] $end
+$var reg 4 $ b [3:0] $end
+$scope module u1 $end
+$var wire 4 % Cout [3:0] $end
+$var wire 4 & a [3:0] $end
+$var wire 4 ' b [3:0] $end
+$var wire 4 ( sum [3:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx (
+bx '
+bx &
+bx %
+bx $
+bx #
+bx "
+bx !
+$end
+#10
+b0 !
+b0 (
+b0 "
+b0 %
+b0 $
+b0 '
+b0 #
+b0 &
+#20
+b1 !
+b1 (
+b1 $
+b1 '
+#30
+b0 $
+b0 '
+b1 #
+b1 &
+#40
+b0 !
+b0 (
+b1 "
+b1 %
+b1 $
+b1 '
+#50
